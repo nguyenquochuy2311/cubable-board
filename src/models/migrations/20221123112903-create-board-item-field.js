@@ -9,11 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      boardItemId: {
-        type: Sequelize.INTEGER
-      },
-      fieldId: {
-        type: Sequelize.INTEGER
+      value: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

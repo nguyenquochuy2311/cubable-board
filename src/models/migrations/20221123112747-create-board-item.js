@@ -2,14 +2,11 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('BoardItems', {
+    await queryInterface.createTable('tbl_board_item', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      boardId: {
         type: Sequelize.INTEGER
       },
       name: {
@@ -26,6 +23,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('BoardItems');
+    await queryInterface.dropTable('tbl_board_item');
   }
 };

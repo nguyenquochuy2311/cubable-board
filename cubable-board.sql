@@ -18,12 +18,8 @@
 CREATE TABLE IF NOT EXISTS `tbl_board` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `startDate` date DEFAULT NULL,
-  `endDate` date DEFAULT NULL,
-  `numberOfRows` int DEFAULT '0',
-  `colorId` int DEFAULT NULL,
-  `isPin` int DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -34,17 +30,7 @@ CREATE TABLE IF NOT EXISTS `tbl_board_item` (
   `id` int NOT NULL AUTO_INCREMENT,
   `boardId` int NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Unnamed',
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `startDate` datetime DEFAULT NULL,
-  `endDate` datetime DEFAULT NULL,
-  `uniqueCode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `statusId` int DEFAULT NULL,
-  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `isLock` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `url` (`url`),
   KEY `FK_tbl_board_item_tbl_board` (`boardId`),
   CONSTRAINT `FK_tbl_board_item_tbl_board` FOREIGN KEY (`boardId`) REFERENCES `tbl_board` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -56,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `tbl_board_item_field` (
   `id` int NOT NULL AUTO_INCREMENT,
   `boardItemId` int DEFAULT NULL,
   `fieldId` int DEFAULT NULL,
-  `isHidden` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'N',
-  `isCustom` enum('Y','N') COLLATE utf8mb4_unicode_ci DEFAULT 'N',
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_tbl_board_item_field_tbl_board_item` (`boardItemId`),
   KEY `FK_tbl_board_item_field_tbl_field` (`fieldId`),
@@ -74,6 +60,8 @@ CREATE TABLE IF NOT EXISTS `tbl_field` (
   `boardId` int DEFAULT NULL,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_tbl_field_tbl_board` (`boardId`),
   KEY `FK__tbl_field_type` (`fieldTypeId`) USING BTREE,
@@ -88,6 +76,8 @@ CREATE TABLE IF NOT EXISTS `tbl_field_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `iconUrl` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

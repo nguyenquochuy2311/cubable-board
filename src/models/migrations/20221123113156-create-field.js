@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('FieldTypeMeta', {
+    await queryInterface.createTable('tbl_field', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,11 +12,8 @@ module.exports = {
       fieldTypeId: {
         type: Sequelize.INTEGER
       },
-      fieldTypeKey: {
-        type: Sequelize.STRING
-      },
-      fieldTypeValue: {
-        type: Sequelize.STRING
+      boardId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('FieldTypeMeta');
+    await queryInterface.dropTable('tbl_field');
   }
 };

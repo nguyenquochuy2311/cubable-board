@@ -20,20 +20,20 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       type: DataTypes.DATE
     },
-    deletedAt: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    createdBy: {
-      type: DataTypes.INTEGER
-    },
-    updatedBy: {
-      type: DataTypes.INTEGER
-    },
-    deletedBy: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    }
+    // deletedAt: {
+    //   type: DataTypes.DATE,
+    //   allowNull: true
+    // },
+    // createdBy: {
+    //   type: DataTypes.INTEGER
+    // },
+    // updatedBy: {
+    //   type: DataTypes.INTEGER
+    // },
+    // deletedBy: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: true
+    // }
   }, {
     sequelize,
     modelName: 'BaseModel',

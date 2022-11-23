@@ -12,9 +12,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      iconUrl: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -22,22 +19,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      deletedAt: {
-        allowNull: true,
-        type: Sequelize.DATE
-      },
-      createdBy: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      updatedBy: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      deletedBy: {
-        allowNull: true,
-        type: Sequelize.INTEGER
       }
     });
   },

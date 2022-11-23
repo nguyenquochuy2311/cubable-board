@@ -1,7 +1,6 @@
 'use strict';
 
 const BaseModel = require("../base.model");
-const MetaModel = require("../meta/meta.model");
 
 module.exports = (sequelize, DataTypes) => {
   class BoardItemModel extends BaseModel {
@@ -19,38 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "Unnamed"
-    },
-    email: {
-      type: DataTypes.STRING,
-      unique: true
-    },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      unique: true
-    },
-    startDate: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    endDate: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    uniqueCode: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    isLock: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "F"
     }
   }, {
     sequelize,

@@ -3,7 +3,7 @@
 const BaseModel = require("../base.model");
 
 module.exports = (sequelize, DataTypes) => {
-  class MetaModel extends BaseModel {
+  class BoardItemFieldModel extends BaseModel {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,17 +13,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  MetaModel.init({
-    metaKey: {
-        type: DataTypes.STRING,
+  BoardItemFieldModel.init({
+    boardItemId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    metaValue: {
-        type: DataTypes.STRING,
-        allowNull: true
+    fieldId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'MetaModel',
+    modelName: 'BoardItemFieldModel',
   });
-  return MetaModel;
+  return BoardItemFieldModel;
 };

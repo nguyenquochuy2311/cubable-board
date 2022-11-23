@@ -17,22 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    startDate: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    endDate: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    numberOfRows: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
     }
   }, {
     sequelize,

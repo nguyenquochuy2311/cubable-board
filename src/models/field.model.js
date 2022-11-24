@@ -1,9 +1,10 @@
 "use strict";
 
-const BaseModel = require("../base.model");
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class FieldModel extends BaseModel {
+  class FieldModel extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -15,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   FieldModel.init(
     {
-      // name: {
-      //   type: DataTypes.STRING,
-      // },
-      // description: {
-      //   type: DataTypes.STRING,
-      //   allowNull: true
-      // }
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      fieldTypeId: {
+        type: DataTypes.INTEGER
+      }
     },
     {
       sequelize,

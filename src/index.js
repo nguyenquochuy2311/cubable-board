@@ -1,14 +1,22 @@
 const express = require("express");
-
 const app = express();
+const httpError = require("http-errors");
+const v1ApiRouter = require("./routes/api/v1");
+
 
 /** V1 */
-app.use("/api/v1", (req, res) => {
-    res.send("OK");
+v1ApiRouter(app);
+
+app.use((req, res, next)  => {
+    next(httpError.NotFound("API Not Found"));
 })
 
-app.use("/*", (req, res) => {
-    res.send("Not Found");  
+app.use((err, req, res, next) => {
+    res.status(err.status || 400).send({
+        message: err.message || "Something went wrong"
+    })
 })
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log("Running...");
+});

@@ -1,9 +1,10 @@
 'use strict';
 
-const BaseModel = require("../base.model");
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class BoardModel extends BaseModel {
+  class BoardItemModel extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,14 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  BoardModel.init({
-    title: {
+  BoardItemModel.init({
+    name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      // defaultValue: "Unnamed"
+    },
+    boardId: {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
-    modelName: 'BoardModel',
+    modelName: 'BoardItemModel',
   });
-  return BoardModel;
+  return BoardItemModel;
 };

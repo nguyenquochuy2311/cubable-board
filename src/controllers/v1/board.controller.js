@@ -1,9 +1,11 @@
 const Board = require("../../models").BoardModel;
 
 module.exports = {
-    getAll: async(req, res, next) => {
+    getAll: async (req, res, next) => {
         try {
-            const boards = await Board.find();
+            const boards = await Board.findAll({
+                attributes: ['id', 'title']
+            });
             return res.json({
                 boards: boards
             });

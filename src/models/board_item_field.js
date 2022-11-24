@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'BoardItemFieldModel',
+    modelName: 'tbl_board_item_field',
   });
   return BoardItemFieldModel;
 };

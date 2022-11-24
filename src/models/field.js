@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class FieldTypeModel extends Model {
+  class FieldModel extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,13 +14,20 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  FieldTypeModel.init({
-    name: {
-      type: DataTypes.STRING,
+  FieldModel.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      fieldTypeId: {
+        type: DataTypes.INTEGER
+      }
+    },
+    {
+      sequelize,
+      modelName: "tbl_field",
     }
-  }, {
-    sequelize,
-    modelName: 'FieldTypeModel',
-  });
-  return FieldTypeModel;
+  );
+  return FieldModel;
 };

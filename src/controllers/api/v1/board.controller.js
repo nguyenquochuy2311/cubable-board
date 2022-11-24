@@ -2,7 +2,8 @@ const createError = require("http-errors");
 
 const Board = require("../../../models").BoardModel;
 const BoardItem = require("../../../models").BoardItemModel;
-const BoardField = require("../../../models").BoardField;
+const BoardField = require("../../../models").BoardFieldModel;
+const Field = require("../../../models").FieldModel;
 const validateCreateBoardForm = require("../../../validation/board/create");
 
 module.exports = {
@@ -30,12 +31,23 @@ module.exports = {
                     as: "boardItems",
                     attributes: ["id", "name"]
                 }]
+                // {
+                //     include: [{
+                //         model: Field,
+                //         as: "boardFields",
+                //         attributes: ["id", "boardId"]
+                //     }]
+                // }
             });
 
+            const boardItems = board.boardItems;
+            // const boardFields = board.boardFields;
+
+            console.log(board);
             return res.json({
                 id: board.id,
                 title: board.title,
-                boardItems: board.boardItems
+                boardItems: boardItems
             });
         } catch (error) {
             next(error);

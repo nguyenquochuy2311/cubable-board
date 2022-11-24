@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
                 as: "boardItems",
                 foreignKey: "boardId"
             })
+
+                // BoardModel.hasMany(models.FieldModel, {
+                //     as: "boardFields",
+                //     foreignKey: "boardId"
+                // })
         }
 
         toJSON() {

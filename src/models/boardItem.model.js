@@ -16,8 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   BoardItemModel.init({
     name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
       // defaultValue: "Unnamed"
     },
     boardId: {
@@ -25,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'tbl_board_item',
+    tableName: 'tbl_board_item',
   });
   return BoardItemModel;
 };

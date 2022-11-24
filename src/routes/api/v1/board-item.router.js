@@ -1,16 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const isBoardExisted = require("../../../middleware/isBoardExisted");
+const boardItemController = require("../../../controllers/api/v1/boardItem.controller");
 
-const boardController = require("../../../controllers/api/v1/board.controller");
-
-router.get("/", boardController.getAll);
-
-router.get("/:id", boardController.getById);
-
-router.post("/", boardController.create);
-
-router.put("/:id", boardController.update);
-
-router.delete("/:id", boardController.destroy);
+router.get("/:id", isBoardExisted, boardItemController.getByBoardId);
 
 module.exports = router;

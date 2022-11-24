@@ -1,6 +1,7 @@
 const createError = require("http-errors");
 
 const Board = require("../../../models").BoardModel;
+const BoardItem = require("../../../models").BoardItemModel;
 const validateCreateBoardForm = require("../../../validation/board/create");
 
 module.exports = {
@@ -8,11 +9,15 @@ module.exports = {
     getAll: async (req, res, next) => {
         try {
             const boards = await Board.findAll({
-                attributes: ['id', 'title']
+                attributes: ['id', 'title'],
+                include: [{
+                    model: BoardItem,
+                    as: "boardItems",
+                    attributes: ['id', 'name'],
+                }]
             });
-            return res.json({
-                boards: boards
-            });
+
+            return res.json({ boards: boards });
         } catch (error) {
             next(error);
         }
@@ -23,7 +28,12 @@ module.exports = {
         try {
             const boardId = req.params.id;
             const board = await Board.findByPk(boardId, {
-                attributes: ['id', 'title']
+                attributes: ['id', 'title'],
+                include: [{
+                    model: BoardItem,
+                    as: "boardItems",
+                    attributes: ['id', 'name'],
+                }]
             });
             return res.json(board);
         } catch (error) {
@@ -83,7 +93,7 @@ module.exports = {
                     id: boardId
                 }
             });
-            
+
             return boardDeleted ? res.json({ message: "Delete success" }) : next(createError.BadRequest("Delete failed"));
         } catch (error) {
             next(error);

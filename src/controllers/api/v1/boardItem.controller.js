@@ -10,14 +10,17 @@ module.exports = {
         try {
             const board = req.board;
 
-            const boardItems = await BoardItem.findAndCountAll({
+            const boardItems = await BoardItem.findAll({
                 attributes: ['id', 'name'],
                 where: {
                     boardId: board.id
                 }
             });
 
-            return res.json({ boardItems: boardItems});
+            return res.json({ 
+                ...board,
+                boardItems: boardItems
+            });
         } catch (error) {
             next(error);
         }

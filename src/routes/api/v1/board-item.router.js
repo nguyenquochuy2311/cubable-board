@@ -5,4 +5,6 @@ const boardItemController = require("../../../controllers/api/v1/boardItem.contr
 
 router.get("/:id", isBoardExisted, boardItemController.getByBoardId);
 
+// router.get("/:id", isBoardExisted, boardItemController.getByBoardId);
+
 module.exports = router;

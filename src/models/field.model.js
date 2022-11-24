@@ -13,6 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    toJSON() {
+      return {
+        id: this.getDataValue("id"),
+        name: this.name
+      }
+    }
   }
   FieldModel.init(
     {
@@ -26,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "tbl_field",
+      tableName: "tbl_field",
     }
   );
   return FieldModel;

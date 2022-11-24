@@ -2,6 +2,7 @@ const createError = require("http-errors");
 
 const Board = require("../../../models").BoardModel;
 const BoardItem = require("../../../models").BoardItemModel;
+const BoardField = require("../../../models").BoardField;
 const validateCreateBoardForm = require("../../../validation/board/create");
 
 module.exports = {
@@ -9,12 +10,7 @@ module.exports = {
     getAll: async (req, res, next) => {
         try {
             const boards = await Board.findAll({
-                attributes: ['id', 'title'],
-                include: [{
-                    model: BoardItem,
-                    as: "boardItems",
-                    attributes: ['id', 'name'],
-                }]
+                attributes: ["id", "title"]
             });
 
             return res.json({ boards: boards });
@@ -28,14 +24,19 @@ module.exports = {
         try {
             const boardId = req.params.id;
             const board = await Board.findByPk(boardId, {
-                attributes: ['id', 'title'],
+                attributes: ["id", "title"],
                 include: [{
                     model: BoardItem,
                     as: "boardItems",
-                    attributes: ['id', 'name'],
+                    attributes: ["id", "name"]
                 }]
             });
-            return res.json(board);
+
+            return res.json({
+                id: board.id,
+                title: board.title,
+                boardItems: board.boardItems
+            });
         } catch (error) {
             next(error);
         }

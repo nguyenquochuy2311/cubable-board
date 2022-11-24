@@ -11,17 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // BoardItemFieldModel.belongsTo(models.BoardItemModel, {
+      //   as: "boardItems",
+      //   foreignKey: "boardItemId"
+      // });
+
+      // BoardItemFieldModel.belongsTo(models.FieldModel, {
+      //   as: "fields",
+      //   foreignKey: "fieldId"
+      // });
     }
   }
   BoardItemFieldModel.init({
     boardItemId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER
     },
     fieldId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER
     },
     value: {
       type: DataTypes.STRING,
@@ -29,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'tbl_board_item_field',
+    tableName: 'tbl_board_item_field',
   });
   return BoardItemFieldModel;
 };

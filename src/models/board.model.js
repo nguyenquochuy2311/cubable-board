@@ -18,10 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         }
 
         toJSON() {
-          return {
-            id: this.getDataValue("id"),
-            title: this.title
-          }
+            return {
+                id: this.getDataValue("id"),
+                title: this.title
+            }
         }
     }
     BoardModel.init({
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         tableName: "tbl_board",
+        modelName: "BoardModel"
     });
     return BoardModel;
 };

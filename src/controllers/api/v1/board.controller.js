@@ -33,7 +33,13 @@ module.exports = {
     // POST
     create: async(req, res, next) => {
         try {
+            const board = req.body;
+
+            await validateCreateBoardForm(board);
             
+            const boardSaved = await Board.create(board);
+
+            return res.json(boardSaved);
         } catch (error) {
             next(error);
         }

@@ -8,7 +8,7 @@ const isBoardExisted = async (req, res, next) => {
     const board = await Board.findByPk(boardId);
     if (!board) return next(createError.BadRequest("Board not found"));
 
-    req.board = board.toJSON();
+    res.board = board.toJSON();
     return next();
 }
 

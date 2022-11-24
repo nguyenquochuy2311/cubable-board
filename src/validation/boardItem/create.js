@@ -1,12 +1,11 @@
 const Joi = require("joi");
 
 const boardItemForm = Joi.object().keys({
-    name: Joi.string().required(),
-    boardId: Joi.number().integer().required()
+    name: Joi.string().required()
 })
 
-async function validationCreateBoardItemForm(request) {
+async function validateCreateBoardItemForm(request) {
     return await boardItemForm.validateAsync(request);
 }
 
-module.exports = validationCreateBoardItemForm;
+module.exports = validateCreateBoardItemForm;

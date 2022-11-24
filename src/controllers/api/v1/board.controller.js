@@ -65,7 +65,6 @@ module.exports = {
             if (!board) return next(createError.BadRequest("Board not found"));
 
             const { title } = req.body;
-
             const boardUpdated = await Board.update({
                 title: title || board.title
             }, {

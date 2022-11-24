@@ -3,14 +3,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const httpError = require("http-errors");
 
-const v1ApiRouter = require("./routes/api/v1");
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 /** V1 */
+const v1ApiRouter = require("./routes/api/v1");
 v1ApiRouter(app);
 
 app.use((req, res, next)  => {

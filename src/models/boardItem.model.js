@@ -16,6 +16,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "boardId"
       })
     }
+
+    toJSON() {
+      return {
+        id: this.getDataValue("id"),
+        name: this.name
+      }
+    }
   }
   BoardItemModel.init({
     name: {

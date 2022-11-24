@@ -29,7 +29,14 @@ module.exports = {
                 include: [{
                     model: BoardItem,
                     as: "boardItems",
-                    attributes: ["id", "name"]
+                    attributes: ["id", "name"],
+                    include: [{
+                        model: Field,
+                        as: "boardItemFields"
+                    }],
+                    // where: {
+
+                    // }
                 }]
                 // {
                 //     include: [{
@@ -43,7 +50,17 @@ module.exports = {
             const boardItems = board.boardItems;
             // const boardFields = board.boardFields;
 
-            console.log(board);
+            // const boardItemIncludeFields = {};
+            // for (const boardItem of boardItems) {
+            //     console.log(boardItem);
+            // }
+            // console.log(board);
+            boardItems.forEach((boardItemEle, index) => {
+                const itemField = boardItemEle.boardItemFields;
+                console.log(index, itemField.id);
+            });
+
+            return res.json(board);
             return res.json({
                 id: board.id,
                 title: board.title,

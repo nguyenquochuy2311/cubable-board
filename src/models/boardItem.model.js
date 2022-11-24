@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       BoardItemModel.belongsTo(models.BoardModel, {
         as: "board",
         foreignKey: "boardId"
+      }),
+
+      BoardItemModel.belongsToMany(models.FieldModel, {
+        through: "BoardItemFieldModel",
+        as: "boardItemFields",
+        foreignKey: "boardItemId"
       })
     }
 

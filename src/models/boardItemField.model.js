@@ -1,8 +1,6 @@
-'use strict';
+"use strict";
 
-const {
-  Model
-} = require('sequelize');
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class BoardItemFieldModel extends Model {
     /**
@@ -13,29 +11,33 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // BoardItemFieldModel.belongsTo(models.BoardItemModel, {
       //   as: "boardItems",
-      //   foreignKey: "boardItemId"
+      //   foreignKey: "boardItemId",
       // });
 
-      // BoardItemFieldModel.belongsTo(models.FieldModel, {
-      //   as: "fields",
-      //   foreignKey: "fieldId"
+      // BoardItemFieldModel.belongsToMany(models.FieldModel, {
+      //   through: "BoardItemFieldModel",
+      //   as: "boardItemFields",
+      //   foreignKey: "fieldId",
       // });
     }
   }
-  BoardItemFieldModel.init({
-    boardItemId: {
-      type: DataTypes.INTEGER
+  BoardItemFieldModel.init(
+    {
+      boardItemId: {
+        type: DataTypes.INTEGER,
+      },
+      fieldId: {
+        type: DataTypes.INTEGER,
+      },
+      value: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
-    fieldId: {
-      type: DataTypes.INTEGER
-    },
-    value: {
-      type: DataTypes.STRING,
-      allowNull: true
+    {
+      sequelize,
+      tableName: "tbl_board_item_field",
     }
-  }, {
-    sequelize,
-    tableName: 'tbl_board_item_field',
-  });
+  );
   return BoardItemFieldModel;
 };

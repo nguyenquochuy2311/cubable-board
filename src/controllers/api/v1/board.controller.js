@@ -23,7 +23,7 @@ module.exports = {
         }
     },
 
-    // GET param /:id
+    // GET - /:id
     getById: async (req, res, next) => {
         try {
             const boardId = req.params.id;
@@ -56,7 +56,7 @@ module.exports = {
         }
     },
 
-    // PUT param /:id
+    // PUT - /:id
     update: async (req, res, next) => {
         try {
             const boardId = req.params.id;
@@ -79,7 +79,7 @@ module.exports = {
         }
     },
 
-    // DELETE param /:id
+    // DELETE - /:id
     destroy: async (req, res, next) => {
         try {
             const boardId = req.params.id;

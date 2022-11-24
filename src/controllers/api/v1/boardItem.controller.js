@@ -5,7 +5,7 @@ const validateCreateBoardItemForm = require("../../../validation/boardItem/creat
 const validateBoardItemQueryString = require("../../../validation/boardItem/query");
 
 module.exports = {
-    // GET param /:boardId
+    // GET - /:boardId
     getAll: async (req, res, next) => {
         try {
             const board = res.board;
@@ -45,7 +45,7 @@ module.exports = {
         }
     },
 
-    // POST param /:boardId
+    // POST - /:boardId
     create: async (req, res, next) => {
         try {
             const boardItem = req.body;

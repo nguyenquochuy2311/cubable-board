@@ -9,16 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // BoardItemFieldModel.belongsTo(models.BoardItemModel, {
-      //   as: "boardItems",
-      //   foreignKey: "boardItemId",
-      // });
-
-      // BoardItemFieldModel.belongsToMany(models.FieldModel, {
-      //   through: "BoardItemFieldModel",
-      //   as: "boardItemFields",
-      //   foreignKey: "fieldId",
-      // });
+      
     }
   }
   BoardItemFieldModel.init(

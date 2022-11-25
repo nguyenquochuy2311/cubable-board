@@ -2,7 +2,6 @@ const createError = require("http-errors");
 
 const Board = require("../../../models").BoardModel;
 const BoardItem = require("../../../models").BoardItemModel;
-const BoardField = require("../../../models").BoardFieldModel;
 const Field = require("../../../models").FieldModel;
 const validateCreateBoardForm = require("../../../validation/board/create");
 
@@ -24,6 +23,7 @@ module.exports = {
     getById: async (req, res, next) => {
         try {
             const boardId = req.params.id;
+
             const board = await Board.findByPk(boardId, {
                 attributes: ["id", "title"],
                 include: [{
@@ -33,38 +33,42 @@ module.exports = {
                     include: [{
                         model: Field,
                         as: "boardItemFields"
-                    }],
-                    // where: {
-
-                    // }
+                    }]
                 }]
-                // {
-                //     include: [{
-                //         model: Field,
-                //         as: "boardFields",
-                //         attributes: ["id", "boardId"]
-                //     }]
-                // }
             });
 
-            const boardItems = board.boardItems;
-            // const boardFields = board.boardFields;
+            if(!board) return res.json(null);
 
-            // const boardItemIncludeFields = {};
-            // for (const boardItem of boardItems) {
-            //     console.log(boardItem);
-            // }
-            // console.log(board);
-            boardItems.forEach((boardItemEle, index) => {
-                const itemField = boardItemEle.boardItemFields;
-                console.log(index, itemField.id);
-            });
+            let boardItemsRes = [];
+            /** Handle response board include items and fields */
+            if (board.boardItems) {
+                const boardItems = board.boardItems;
+                boardItems.forEach((boardItemEle) => {
+                    const boardItemRes = {
+                        id: boardItemEle.id,
+                        name: boardItemEle.name
+                    };
 
-            return res.json(board);
+                    let boardItemFieldsRes = [];
+                    const boardItemFields = boardItemEle.boardItemFields;
+                    boardItemFields.forEach((boardItemFieldEle) => {
+                        const boardItemFieldRes = {
+                            id: boardItemFieldEle.id,
+                            name: boardItemFieldEle.name,
+                            value: boardItemFieldEle.BoardItemFieldModel.value
+                        }
+                        boardItemFieldsRes.push(boardItemFieldRes);
+                    });
+                    boardItemRes.fields = boardItemFieldsRes;
+                    boardItemsRes.push(boardItemRes);
+                });
+            }
+            /** End handle response board include items and fields */
+
             return res.json({
                 id: board.id,
                 title: board.title,
-                boardItems: boardItems
+                items: boardItemsRes
             });
         } catch (error) {
             next(error);

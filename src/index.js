@@ -12,6 +12,10 @@ app.use(bodyParser.urlencoded({
 const v1ApiRouter = require("./routes/api/v1");
 v1ApiRouter(app);
 
+app.use("/api/health", (req, res) => {
+    res.send("OK");
+})
+
 app.use((req, res, next)  => {
     next(httpError.NotFound("API Not Found"));
 })

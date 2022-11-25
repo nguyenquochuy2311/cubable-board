@@ -64,7 +64,7 @@ module.exports = {
         }
     },
 
-    // GET - /filter/:boardId?boardItemId=:boardItemId
+    // GET - /:boardId/filter?boardItemId=:boardItemId
     getById: async (req, res, next) => {
         try {
             await validateBoardItemQueryString(req.query);
@@ -99,7 +99,7 @@ module.exports = {
         }
     },
 
-    // PUT - /filter/:boardId?boardItemId=:boardItemId
+    // PUT - /:boardId/filter?boardItemId=:boardItemId
     update: async (req, res, next) => {
         try {
             await validateBoardItemQueryString(req.query);
@@ -126,7 +126,7 @@ module.exports = {
         }
     },
 
-    // DELETE - /filter/:boardId?boardItemId=:boardItemId
+    // DELETE - /:boardId/filter?boardItemId=:boardItemId
     destroy: async (req, res, next) => {
         try {
             await validateBoardItemQueryString(req.query);

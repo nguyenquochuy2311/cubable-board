@@ -18,14 +18,18 @@ module.exports = {
                     model: BoardItem,
                     as: "boardItems",
                     attributes: ["id", "name"],
-                    include: [{
-                        model: Field,
-                        as: "boardItemFields"
-                    }]
+                    // include: [{
+                    //     model: Field,
+                    //     as: "boardItemFields",
+                    //     attributes: ["id", "name"]
+                    // }]
                 }]
             });
 
             if(!board) return res.json(null);
+
+            const boardTest = JSON.stringify(board, null, 2);
+            console.log(boardTest);
 
             let boardItemsRes = [];
             /** Handle response board include items and fields */
@@ -38,21 +42,22 @@ module.exports = {
                     };
 
                     let boardItemFieldsRes = [];
-                    const boardItemFields = boardItemEle.boardItemFields;
-                    boardItemFields.forEach((boardItemFieldEle) => {
-                        const boardItemFieldRes = {
-                            id: boardItemFieldEle.id,
-                            name: boardItemFieldEle.name,
-                            value: boardItemFieldEle.BoardItemFieldModel.value
-                        }
-                        boardItemFieldsRes.push(boardItemFieldRes);
-                    });
-                    boardItemRes.fields = boardItemFieldsRes;
+                    if(boardItemEle.boardItemFields) {
+                        const boardItemFields = boardItemEle.boardItemFields;
+                        boardItemFields.forEach((boardItemFieldEle) => {
+                            const boardItemFieldRes = {
+                                id: boardItemFieldEle.id,
+                                name: boardItemFieldEle.name,
+                                value: boardItemFieldEle.BoardItemFieldModel.value
+                            }
+                            boardItemFieldsRes.push(boardItemFieldRes);
+                        });
+                        boardItemRes.fields = boardItemFieldsRes;
+                    }
                     boardItemsRes.push(boardItemRes);
                 });
             }
             /** End handle response board include items and fields */
-
 
             return res.json({
                 id: board.id,

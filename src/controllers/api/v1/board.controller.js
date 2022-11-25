@@ -2,7 +2,6 @@ const createError = require("http-errors");
 
 const Board = require("../../../models").BoardModel;
 const BoardItem = require("../../../models").BoardItemModel;
-const Field = require("../../../models").FieldModel;
 const validateCreateBoardForm = require("../../../validation/board/create");
 
 module.exports = {

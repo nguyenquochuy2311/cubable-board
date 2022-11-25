@@ -1,6 +1,8 @@
 const createError = require("http-errors");
 
+const Board = require("../../../models").BoardModel;
 const BoardItem = require("../../../models").BoardItemModel;
+const Field = require("../../../models").FieldModel;
 const validateCreateBoardItemForm = require("../../../validation/boardItem/create");
 const validateBoardItemQueryString = require("../../../validation/boardItem/query");
 
@@ -8,18 +10,54 @@ module.exports = {
     // GET - /:boardId
     getAll: async (req, res, next) => {
         try {
-            const board = res.board;
+            const boardMiddleware = res.board;
 
-            const boardItems = await BoardItem.findAll({
-                attributes: ['id', 'name'],
-                where: {
-                    boardId: board.id
-                }
+            const board = await Board.findByPk(boardMiddleware.id, {
+                attributes: ["id", "title"],
+                include: [{
+                    model: BoardItem,
+                    as: "boardItems",
+                    attributes: ["id", "name"],
+                    include: [{
+                        model: Field,
+                        as: "boardItemFields"
+                    }]
+                }]
             });
 
+            if(!board) return res.json(null);
+
+            let boardItemsRes = [];
+            /** Handle response board include items and fields */
+            if (board.boardItems) {
+                const boardItems = board.boardItems;
+                boardItems.forEach((boardItemEle) => {
+                    const boardItemRes = {
+                        id: boardItemEle.id,
+                        name: boardItemEle.name
+                    };
+
+                    let boardItemFieldsRes = [];
+                    const boardItemFields = boardItemEle.boardItemFields;
+                    boardItemFields.forEach((boardItemFieldEle) => {
+                        const boardItemFieldRes = {
+                            id: boardItemFieldEle.id,
+                            name: boardItemFieldEle.name,
+                            value: boardItemFieldEle.BoardItemFieldModel.value
+                        }
+                        boardItemFieldsRes.push(boardItemFieldRes);
+                    });
+                    boardItemRes.fields = boardItemFieldsRes;
+                    boardItemsRes.push(boardItemRes);
+                });
+            }
+            /** End handle response board include items and fields */
+
+
             return res.json({
-                ...board,
-                boardItems: boardItems
+                id: board.id,
+                title: board.title,
+                items: boardItemsRes
             });
         } catch (error) {
             next(error);

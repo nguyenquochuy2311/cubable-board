@@ -29,18 +29,14 @@ module.exports = {
                 include: [{
                     model: BoardItem,
                     as: "boardItems",
-                    attributes: ["id", "name"],
-                    include: [{
-                        model: Field,
-                        as: "boardItemFields"
-                    }]
+                    attributes: ["id", "name"]
                 }]
             });
 
             if(!board) return res.json(null);
 
             let boardItemsRes = [];
-            /** Handle response board include items and fields */
+            /** Handle response board include items */
             if (board.boardItems) {
                 const boardItems = board.boardItems;
                 boardItems.forEach((boardItemEle) => {
@@ -48,22 +44,10 @@ module.exports = {
                         id: boardItemEle.id,
                         name: boardItemEle.name
                     };
-
-                    let boardItemFieldsRes = [];
-                    const boardItemFields = boardItemEle.boardItemFields;
-                    boardItemFields.forEach((boardItemFieldEle) => {
-                        const boardItemFieldRes = {
-                            id: boardItemFieldEle.id,
-                            name: boardItemFieldEle.name,
-                            value: boardItemFieldEle.BoardItemFieldModel.value
-                        }
-                        boardItemFieldsRes.push(boardItemFieldRes);
-                    });
-                    boardItemRes.fields = boardItemFieldsRes;
                     boardItemsRes.push(boardItemRes);
                 });
             }
-            /** End handle response board include items and fields */
+            /** End handle response board include items */
 
             return res.json({
                 id: board.id,

@@ -8,10 +8,10 @@ module.exports = {
      */
     create: async (next, model, data, where = {}) => {
         try {
-            const modelCreated = await model.create(data, {
+            const dataCreated = await model.create(data, {
                 where: where
             });
-            return modelCreated;
+            return dataCreated;
         } catch (error) {
             next(error);
         }
@@ -28,8 +28,8 @@ module.exports = {
         try {
             const isUpdated = await model.update(data, { where: where });
             if (isUpdated[0]) {
-                const modelUpdated = await model.fineOne({ where: where });
-                return modelUpdated;
+                const dataUpdated = await model.fineOne({ where: where });
+                return dataUpdated;
             }
             return {};
         } catch (error) {

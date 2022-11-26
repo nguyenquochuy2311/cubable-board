@@ -30,7 +30,7 @@ module.exports = {
       ["boardItemId", "fieldId"],
       {
         name: "idx_boardItemId_fieldId",
-        indicesType: "FULLTEXT",
+        unique: true
       }
     );
   },

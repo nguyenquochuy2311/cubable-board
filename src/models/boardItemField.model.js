@@ -1,6 +1,8 @@
 "use strict";
 
-const { Model } = require("sequelize");
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class BoardItemFieldModel extends Model {
     /**
@@ -10,6 +12,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       
+    }
+
+    toJSON() {
+      return {
+        id: this.getDataValue("id"),
+        value: this.value,
+        boardItemId: this.boardItemId,
+        fieldId: this.fieldId
+      }
     }
   }
   BoardItemFieldModel.init(
@@ -24,10 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-    },
-    {
+    }, {
       sequelize,
       tableName: "tbl_board_item_field",
+      modelName: "BoardItemFieldModel"
     }
   );
   return BoardItemFieldModel;

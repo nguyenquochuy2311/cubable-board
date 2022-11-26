@@ -4,33 +4,36 @@ const BoardItemField = require("../../../models").BoardItemFieldModel;
 
 module.exports = {
     // POST - /:boardItemId/:fieldId
-    create: async(req, res, next) => {
+    createOrUpdate: async(req, res, next) => {
         try {
             console.log(res.itemField);
-            // todo
-            return res.send("here create");
+            return res.send("here create or update");
         } catch (error) {
             next(error);
         }
     },
 
-    // PUT - /:boardItemId/:fieldId
-    update: async(req, res, next) => {
-        try {
-            console.log(res.itemField);
-            // todo
-            return res.send("here update");
-        } catch (error) {
-            next(error);
-        }
-    },
-
-    //GET - 
+    //GET - /:boardItemId/:fieldId
     getByItemAndField: async(req, res, next) => {
         try {
-            console.log(res.itemField);
-            // todo
-            return res.send("here getByItemAndField");
+            const itemFieldMiddleware = res.itemField;
+
+            const itemField = await BoardItemField.findOne({
+                attributes: ["id", "value"],
+                where: {
+                    boardItemId: itemFieldMiddleware.boardItem.id,
+                    fieldId: itemFieldMiddleware.field.id
+                }
+            });
+
+            if(!itemField) return res.json(null);
+
+            return res.json({
+                id: itemField.id,
+                value: itemField.value,
+                boardItem: itemFieldMiddleware.boardItem,
+                field: itemFieldMiddleware.field
+            });
         } catch (error) {
             next(error);
         }

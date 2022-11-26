@@ -26,7 +26,7 @@ module.exports = {
                 }]
             });
 
-            if(!board) return res.send(null);
+            if(!board) return res.json(null);
 
             // console.log(JSON.stringify(board.boardItems));
 

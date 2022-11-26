@@ -15,15 +15,19 @@ const isValidItemAndField = async (req, res, next) => {
         return next(createError.NotFound());
     }
 
-    const boardItem = await BoardItem.findByPk(boardItemId);
+    const boardItem = await BoardItem.findByPk(boardItemId, {
+        attributes: ["id", "name"]
+    });
     if (!boardItem) return next(createError.BadRequest("Board not found"));
 
-    const field = await Field.findByPk(fieldId);
+    const field = await Field.findByPk(fieldId, {
+        attributes: ["id", "name"]
+    });
     if(!field) return next(createError.BadRequest("Field not found"));
 
     res.itemField = {
-        boardItemId: boardItemId,
-        fieldId: fieldId
+        boardItem: boardItem,
+        field: field
     }
     return next();
 }

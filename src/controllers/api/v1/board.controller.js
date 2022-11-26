@@ -1,17 +1,12 @@
 const createError = require("http-errors");
-
-const Board = require("../../../models").BoardModel;
-const BoardItem = require("../../../models").BoardItemModel;
+const boardService = require("../../../services/app/board.service");
 const validateCreateBoardForm = require("../../../validation/board/create");
 
 module.exports = {
     // GET
     getAll: async (req, res, next) => {
         try {
-            const boards = await Board.findAll({
-                attributes: ["id", "title"]
-            });
-
+            const boards = await boardService.getAll();
             return res.json({ boards: boards });
         } catch (error) {
             next(error);
@@ -23,14 +18,7 @@ module.exports = {
         try {
             const boardId = req.params.id;
 
-            const board = await Board.findByPk(boardId, {
-                attributes: ["id", "title"],
-                include: [{
-                    model: BoardItem,
-                    as: "boardItems",
-                    attributes: ["id", "name"]
-                }]
-            });
+            const board = await boardService.getOneByIdIncludeItems(boardId);
 
             if(!board) return res.json(null);
 
@@ -62,12 +50,11 @@ module.exports = {
     create: async (req, res, next) => {
         try {
             const board = req.body;
-
             await validateCreateBoardForm(board);
 
-            const boardSaved = await Board.create(board);
+            const boardCreated = await boardService.createOne(board);
 
-            return res.json(boardSaved);
+            return res.json(boardCreated);
         } catch (error) {
             next(error);
         }
@@ -78,19 +65,17 @@ module.exports = {
         try {
             const boardId = req.params.id;
 
-            const board = await Board.findByPk(boardId);
+            const board = await boardService.getOneById(boardId);
             if (!board) return next(createError.BadRequest("Board not found"));
 
             const { title } = req.body;
-            const boardUpdated = await Board.update({
-                title: title || board.title
-            }, {
-                where: {
-                    id: boardId
-                }
-            });
+            const boardReq = {
+                title : title || board.title
+            };
+            const boardUpdated = await boardService.updateById(boardReq, boardId);
 
-            return boardUpdated[0] ? res.json({ message: "Update success" }) : next(createError.BadRequest("Update failed"));
+            if(!boardUpdated) return next(createError.BadRequest("Update failed"));
+            return res.json(boardUpdated);
         } catch (error) {
             next(error);
         }
@@ -101,16 +86,13 @@ module.exports = {
         try {
             const boardId = req.params.id;
 
-            const board = await Board.findByPk(boardId);
+            const board = await boardService.getOneById(boardId);
             if (!board) return next(createError.BadRequest("Board not found"));
 
-            const boardDeleted = await Board.destroy({
-                where: {
-                    id: boardId
-                }
-            });
-
-            return boardDeleted ? res.json({ message: "Delete success" }) : next(createError.BadRequest("Delete failed"));
+            const isDeleted = await boardService.deleteById(boardId);
+            if(!isDeleted) return next(createError.BadRequest("Delete failed"));
+            
+            return res.json({ message: "Delete success" });
         } catch (error) {
             next(error);
         }

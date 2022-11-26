@@ -3,7 +3,7 @@ const createError = require("http-errors");
 const BoardItemField = require("../../../models").BoardItemFieldModel;
 const validateCreateOrUpdateBoardItemFieldForm = require("../../../validation/boardItemField/createOrUpdate");
 
-const crudService = require("../../../service/app/crud");
+const crudService = require("../../../services/app/crud.service");
 
 module.exports = {
     // POST - /:boardItemId/:fieldId

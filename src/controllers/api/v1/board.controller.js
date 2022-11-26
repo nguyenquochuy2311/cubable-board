@@ -32,19 +32,19 @@ module.exports = {
                 }]
             });
 
-            if(!board) return res.json(null);
+            if(!board) return res.send(null);
 
             let boardItemsRes = [];
             /** Handle response board include items */
             if (board.boardItems) {
                 const boardItems = board.boardItems;
-                boardItems.forEach((boardItemEle) => {
+                for (const boardItemEle of boardItems) {
                     const boardItemRes = {
                         id: boardItemEle.id,
                         name: boardItemEle.name
                     };
-                    boardItemsRes.push(boardItemRes);
-                });
+                    boardItemsRes.push(boardItemRes);       
+                }
             }
             /** End handle response board include items */
 

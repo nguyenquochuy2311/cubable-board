@@ -18,44 +18,42 @@ module.exports = {
                     model: BoardItem,
                     as: "boardItems",
                     attributes: ["id", "name"],
-                    // include: [{
-                    //     model: Field,
-                    //     as: "boardItemFields",
-                    //     attributes: ["id", "name"]
-                    // }]
+                    include: [{
+                        model: Field,
+                        as: "boardItemFields",
+                        attributes: ["id", "name"]
+                    }]
                 }]
             });
 
-            if(!board) return res.json(null);
+            if(!board) return res.send(null);
 
-            const boardTest = JSON.stringify(board, null, 2);
-            console.log(boardTest);
+            // console.log(JSON.stringify(board.boardItems));
 
             let boardItemsRes = [];
             /** Handle response board include items and fields */
             if (board.boardItems) {
                 const boardItems = board.boardItems;
-                boardItems.forEach((boardItemEle) => {
+                for (const boardItemEle of boardItems) {
                     const boardItemRes = {
                         id: boardItemEle.id,
                         name: boardItemEle.name
                     };
-
                     let boardItemFieldsRes = [];
                     if(boardItemEle.boardItemFields) {
                         const boardItemFields = boardItemEle.boardItemFields;
-                        boardItemFields.forEach((boardItemFieldEle) => {
+                        for (const boardItemFieldEle of boardItemFields) {
                             const boardItemFieldRes = {
                                 id: boardItemFieldEle.id,
                                 name: boardItemFieldEle.name,
                                 value: boardItemFieldEle.BoardItemFieldModel.value
                             }
                             boardItemFieldsRes.push(boardItemFieldRes);
-                        });
+                        }
                         boardItemRes.fields = boardItemFieldsRes;
                     }
                     boardItemsRes.push(boardItemRes);
-                });
+                }
             }
             /** End handle response board include items and fields */
 

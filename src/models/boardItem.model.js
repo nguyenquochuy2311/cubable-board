@@ -16,17 +16,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "boardId"
       }),
 
-        BoardItemModel.belongsToMany(models.FieldModel, {
-          through: "BoardItemFieldModel",
-          as: "boardItemFields",
-          foreignKey: "boardItemId"
-        })
+      BoardItemModel.belongsToMany(models.FieldModel, {
+        through: "BoardItemFieldModel",
+        as: "boardItemFields",
+        foreignKey: "boardItemId"
+      })
     }
 
     toJSON() {
       return {
         id: this.getDataValue("id"),
-        name: this.name
+        name: this.get("name"),
+        boardId: this.get("boardId")
       }
     }
   }

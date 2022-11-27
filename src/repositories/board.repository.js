@@ -9,21 +9,21 @@ class BoardRepository extends BaseRepository {
     }
 
     async findAllBoard() {
-        const boardAttr = ["id", "title"];
-        const boards = await this.findAll(boardAttr);
+        const attributes = ["id", "title"];
+        const boards = await this.findAll(attributes);
         return boards;
     }
 
     async findByPkBoard(id) {
-        const boardAttr = ["id", "title"];
-        const board = await this.findByPk(boardAttr, id);
+        const attributes = ["id", "title"];
+        const board = await this.findByPk(attributes, id);
         return board;
     }
 
     async findByPkBoardIncludeItems(id) {
-        const boardAttr = ["id", "title"];
+        const attributes = ["id", "title"];
         const board = await Board.findByPk(id, {
-            attributes: boardAttr,
+            attributes: attributes,
             include: [{
                 attributes: ["id", "name"],
                 model: BoardItem,

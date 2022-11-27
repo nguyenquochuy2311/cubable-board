@@ -5,8 +5,8 @@ const boardRepository = require("../../repositories/board.repository");
  * @return  {}  board object 
  */
 const createOne = async (data) => {
-    const dataCreated = await boardRepository.create(data);
-    return dataCreated;
+    const boardCreated = await boardRepository.create(data);
+    return boardCreated;
 }
 
 /**
@@ -14,8 +14,8 @@ const createOne = async (data) => {
  * @return  {}  board object 
  */
 const updateById = async (data) => {
-    const dataUpdated = await boardRepository.updateByPk(data);
-    return dataUpdated;
+    const boardUpdated = await boardRepository.updateByPk(data);
+    return boardUpdated;
 }
 
 /**

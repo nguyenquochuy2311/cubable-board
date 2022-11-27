@@ -71,11 +71,11 @@ module.exports = {
             const { title } = req.body;
             const boardReq = {
                 id: boardId,
-                title: title || board.title
+                title: title || board.get("title")
             };
             const boardUpdated = await boardService.updateById(boardReq);
-
             if (!boardUpdated) return next(createError.BadRequest("Update failed"));
+            
             return res.json(boardUpdated);
         } catch (error) {
             next(error);
@@ -91,9 +91,9 @@ module.exports = {
             if (!board) return next(createError.BadRequest("Board not found"));
 
             const isDeleted = await boardService.deleteById(boardId);
-            if (!isDeleted) return next(createError.BadRequest("Delete failed"));
+            if (isDeleted) return res.json({ message: "Delete success" });
 
-            return res.json({ message: "Delete success" });
+            return next(createError.BadRequest("Delete failed"));
         } catch (error) {
             next(error);
         }

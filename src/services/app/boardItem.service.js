@@ -1,5 +1,6 @@
 const Board = require("../../models").BoardModel;
 const BoardItem = require("../../models").BoardItemModel;
+const Field = require("../../models").FieldModel;
 const crudService = require("./crud.service");
 
 /**
@@ -16,7 +17,7 @@ const createOne = async (data) => {
  * @return  {}  boardItem object 
  */
 const updateById = async (data, id) => {
-    const dataUpdated = await crudService.update(Board, data, { id: id });
+    const dataUpdated = await crudService.update(BoardItem, data, { id: id });
     return dataUpdated;
 }
 
@@ -24,10 +25,21 @@ const updateById = async (data, id) => {
  * @param          
  * @return  []  boardItem array 
  */
-const getAll = async () => {
-    const boardAttr = ["id", "title"];
-    const boards = await crudService.findAll(Board, boardAttr);
-    return boards;
+const getAllByBoardIdIncludeItemFields = async (boardId) => {
+    const board = await Board.findByPk(boardId, {
+        attributes: ["id", "title"],
+        include: [{
+            model: BoardItem,
+            as: "boardItems",
+            attributes: ["id", "name"],
+            include: [{
+                model: Field,
+                as: "boardItemFields",
+                attributes: ["id", "name"]
+            }]
+        }]
+    });
+    return board;
 };
 
 /**
@@ -69,7 +81,7 @@ const getOneByIdIncludeItems = async (id) => {
 module.exports = {
     createOne,
     updateById,
-    getAllBoard,
+    getAllByBoardIdIncludeItemFields,
     getOneById,
     getOneByIdIncludeItems,
     deleteById,

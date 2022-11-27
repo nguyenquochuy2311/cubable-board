@@ -20,7 +20,7 @@ module.exports = {
 
             const board = await boardService.getOneByIdIncludeItems(boardId);
 
-            if(!board) return res.json(null);
+            if (!board) return res.json(null);
 
             let boardItemsRes = [];
             /** Handle response board include items */
@@ -28,17 +28,17 @@ module.exports = {
                 const boardItems = board.boardItems;
                 for (const boardItemEle of boardItems) {
                     const boardItemRes = {
-                        id: boardItemEle.id,
-                        name: boardItemEle.name
+                        id: boardItemEle.get("id"),
+                        name: boardItemEle.get("name")
                     };
-                    boardItemsRes.push(boardItemRes);       
+                    boardItemsRes.push(boardItemRes);
                 }
             }
             /** End handle response board include items */
 
             return res.json({
-                id: board.id,
-                title: board.title,
+                id: board.get("id"),
+                title: board.get("title"),
                 items: boardItemsRes
             });
         } catch (error) {
@@ -70,11 +70,12 @@ module.exports = {
 
             const { title } = req.body;
             const boardReq = {
-                title : title || board.title
+                id: boardId,
+                title: title || board.title
             };
-            const boardUpdated = await boardService.updateById(boardReq, boardId);
+            const boardUpdated = await boardService.updateById(boardReq);
 
-            if(!boardUpdated) return next(createError.BadRequest("Update failed"));
+            if (!boardUpdated) return next(createError.BadRequest("Update failed"));
             return res.json(boardUpdated);
         } catch (error) {
             next(error);
@@ -90,8 +91,8 @@ module.exports = {
             if (!board) return next(createError.BadRequest("Board not found"));
 
             const isDeleted = await boardService.deleteById(boardId);
-            if(!isDeleted) return next(createError.BadRequest("Delete failed"));
-            
+            if (!isDeleted) return next(createError.BadRequest("Delete failed"));
+
             return res.json({ message: "Delete success" });
         } catch (error) {
             next(error);

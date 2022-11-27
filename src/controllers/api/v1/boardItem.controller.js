@@ -3,6 +3,7 @@ const createError = require("http-errors");
 const Board = require("../../../models").BoardModel;
 const BoardItem = require("../../../models").BoardItemModel;
 const Field = require("../../../models").FieldModel;
+const boardItemService = require("../../../services/app/boardItem.service");
 const validateCreateBoardItemForm = require("../../../validation/boardItem/create");
 const validateBoardItemQueryString = require("../../../validation/boardItem/query");
 
@@ -12,23 +13,9 @@ module.exports = {
         try {
             const boardMiddleware = res.board;
 
-            const board = await Board.findByPk(boardMiddleware.id, {
-                attributes: ["id", "title"],
-                include: [{
-                    model: BoardItem,
-                    as: "boardItems",
-                    attributes: ["id", "name"],
-                    include: [{
-                        model: Field,
-                        as: "boardItemFields",
-                        attributes: ["id", "name"]
-                    }]
-                }]
-            });
+            const board = await boardItemService.getAllByBoardIdIncludeItemFields(boardMiddleware.id);
 
             if(!board) return res.json(null);
-
-            // console.log(JSON.stringify(board.boardItems));
 
             let boardItemsRes = [];
             /** Handle response board include items and fields */

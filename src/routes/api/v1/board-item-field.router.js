@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const isValidItemAndField = require("../../../middleware/isValidItemAndField");
+const isValidItemAndField = require("../../../middlewares/isValidItemAndField");
 const boardItemFieldController = require("../../../controllers/api/v1/boardItemField.controller");
 
 router.post("/:boardItemId/:fieldId", isValidItemAndField, boardItemFieldController.createOrUpdate);

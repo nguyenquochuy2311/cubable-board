@@ -1,13 +1,11 @@
-const Board = require("../../models").BoardModel;
-const BoardItem = require("../../models").BoardItemModel;
-const crudService = require("./crud.service");
+const boardRepository = require("../../repositories/board.repository");
 
 /**
  * @param   {}  board object       
  * @return  {}  board object 
  */
 const createOne = async (data) => {
-    const dataCreated = await crudService.create(Board, data);
+    const dataCreated = await boardRepository.create(data);
     return dataCreated;
 }
 
@@ -15,8 +13,8 @@ const createOne = async (data) => {
  * @param   {}  board object, board id       
  * @return  {}  board object 
  */
-const updateById = async (data, id) => {
-    const dataUpdated = await crudService.update(Board, data, { id: id });
+const updateById = async (data) => {
+    const dataUpdated = await boardRepository.updateByPk(data);
     return dataUpdated;
 }
 
@@ -25,8 +23,7 @@ const updateById = async (data, id) => {
  * @return  []  board array 
  */
 const getAll = async () => {
-    const boardAttr = ["id", "title"];
-    const boards = await crudService.findAll(Board, boardAttr);
+    const boards = await boardRepository.findAllBoard();
     return boards;
 };
 
@@ -35,8 +32,7 @@ const getAll = async () => {
  * @return  {}  board object 
  */
 const getOneById = async (id) => {
-    const boardAttr = ["id", "title"];
-    const board = await crudService.findByPk(Board, boardAttr, id);
+    const board = await boardRepository.findByPkBoard(id);
     return board;
 }
 
@@ -45,15 +41,7 @@ const getOneById = async (id) => {
  * @return  {}  board object 
  */
 const getOneByIdIncludeItems = async (id) => {
-    const boardAttr = ["id", "title"];
-    const board = await Board.findByPk(id, {
-        attributes: boardAttr,
-        include: [{
-            attributes: ["id", "name"],
-            model: BoardItem,
-            as: "boardItems"
-        }]
-    });
+    const board = await boardRepository.findByPkBoardIncludeItems(id);
     return board;
 };
 
@@ -62,7 +50,7 @@ const getOneByIdIncludeItems = async (id) => {
  * @return  0 || 1  boolean
  */
  const deleteById = async (id) => {
-    const isDeleted = await crudService.destroyByPk(Board, id);
+    const isDeleted = await boardRepository.destroyByPkBoard(id);
     return isDeleted;
 };
 

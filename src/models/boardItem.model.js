@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "boardId"
       }),
 
-      BoardItemModel.belongsToMany(models.FieldModel, {
-        through: "BoardItemFieldModel",
-        as: "boardItemFields",
-        foreignKey: "boardItemId"
-      })
+        BoardItemModel.belongsToMany(models.FieldModel, {
+          through: "BoardItemFieldModel",
+          as: "boardItemFields",
+          foreignKey: "boardItemId"
+        })
     }
 
     toJSON() {
@@ -32,11 +32,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   BoardItemModel.init({
     name: {
-      type: DataTypes.STRING
-      // defaultValue: "Unnamed"
+      type: DataTypes.STRING,
+      get() {
+        return this.getDataValue("name");
+      },
+      set(val) {
+        this.setDataValue("name", val);
+      }
     },
     boardId: {
       type: DataTypes.INTEGER,
+      get() {
+        return this.getDataValue("boardId");
+      },
+      set(val) {
+        this.setDataValue("boardId", val);
+      }
     }
   }, {
     sequelize,

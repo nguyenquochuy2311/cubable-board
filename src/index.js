@@ -5,12 +5,12 @@ const httpError = require("http-errors");
 
 /** Sync db */
 const db = require("./models");
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: true }).then(() => {
     console.log("::Sync db success")
 })
-.catch((error) => {
-    throw error;
-});
+    .catch((error) => {
+        throw error;
+    });
 /**End sync db */
 
 app.use(bodyParser.json());
@@ -23,7 +23,7 @@ require("./routes/health.router")(app);
 require("./routes/api/v1")(app);
 /**End define router api */
 
-app.use((req, res, next)  => {
+app.use((req, res, next) => {
     next(httpError.NotFound("API Not Found"));
 })
 
@@ -33,6 +33,6 @@ app.use((err, req, res, next) => {
     })
 })
 
-app.listen(3000, () => {
+app.listen(process.env.NODE_PORT || 3000, () => {
     console.log("Running...");
 });

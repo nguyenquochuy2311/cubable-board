@@ -1,5 +1,8 @@
 "use strict";
 
+const BoardItem = require("./board.model");
+const Field = require("./field.model");
+
 const {
   Model
 } = require('sequelize');
@@ -25,14 +28,25 @@ module.exports = (sequelize, DataTypes) => {
     toJSON() {
       return {
         id: this.getDataValue("id"),
-        value: this.value,
-        boardItemId: this.boardItemId,
-        fieldId: this.fieldId
+        value: this.getDataValue("value"),
+        boardItemId: this.getDataValue("boardItemId"),
+        fieldId: this.getDataValue("fieldId")
       }
     }
   }
   BoardItemFieldModel.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        get() {
+          return this.getDataValue("id")
+        },
+        set(val) {
+          this.setDataValue("id", val)
+        }
+      },
       value: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -45,6 +59,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       boardItemId: {
         type: DataTypes.INTEGER,
+        references: {
+          model: BoardItem,
+          key: "fk_board_item"
+        },
         get() {
           return this.getDataValue("boardItemId")
         },
@@ -54,6 +72,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       fieldId: {
         type: DataTypes.INTEGER,
+        references: {
+          model: Field,
+          key: "fk_field"
+        },
         get() {
           return this.getDataValue("fieldId")
         },
@@ -63,9 +85,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     }, {
     sequelize,
+    timestamps: true,
     tableName: "tbl_board_item_field",
     modelName: "BoardItemFieldModel",
-    indexs: [{ unique: true, fields: ["boardItemId", "fieldId"] }]
+    indexs: [{ name: "idx_boardItemId_fieldId", unique: true, fields: ["boardItemId", "fieldId"] }]
   }
   );
   return BoardItemFieldModel;

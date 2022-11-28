@@ -3,18 +3,26 @@ const app = express();
 const bodyParser = require("body-parser");
 const httpError = require("http-errors");
 
+/** Sync db */
+const db = require("./models");
+db.sequelize.sync().then(() => {
+    console.log("::Sync db success")
+})
+.catch((error) => {
+    throw error;
+});
+/**End sync db */
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+require("./routes/health.router")(app);
+
 /** V1 */
 const v1ApiRouter = require("./routes/api/v1");
 v1ApiRouter(app);
-
-app.use("/api/health", (req, res) => {
-    res.send("OK");
-})
 
 app.use((req, res, next)  => {
     next(httpError.NotFound("API Not Found"));

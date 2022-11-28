@@ -55,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       tableName: "tbl_field",
+      modelName: "FieldModel"
     }
   );
   return FieldModel;

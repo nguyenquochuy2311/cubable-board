@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      FieldTypeModel.hasMany(models.FieldMode, {
+      FieldTypeModel.hasMany(models.FieldModel, {
         as: "fields",
         foreignKey: "fieldTypeId"
       })
@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'tbl_field_type',
+    tableName: 'tbl_field_type',
+    modelName: "FieldTypeModel"
   });
   return FieldTypeModel;
 };

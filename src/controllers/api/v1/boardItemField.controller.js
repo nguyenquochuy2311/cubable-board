@@ -9,7 +9,7 @@ module.exports = {
             await validateCreateOrUpdateBoardItemFieldForm(req.body);
             const { value } = req.body;
 
-            const itemFieldMiddleware = res.itemField;
+            const itemFieldMiddleware = req.itemField;
 
             const itemField = {
                 value: value,
@@ -28,7 +28,7 @@ module.exports = {
     //GET - /:boardItemId/:fieldId
     getByItemAndField: async (req, res, next) => {
         try {
-            const itemFieldMiddleware = res.itemField;
+            const itemFieldMiddleware = req.itemField;
 
             const itemId = itemFieldMiddleware.boardItem.id;
             const fieldId = itemFieldMiddleware.field.id;

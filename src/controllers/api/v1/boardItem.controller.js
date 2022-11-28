@@ -7,7 +7,7 @@ module.exports = {
     // GET - /:boardId
     getAll: async (req, res, next) => {
         try {
-            const boardMiddleware = res.board;
+            const boardMiddleware = req.board;
 
             const boardItems = await boardItemService.getAllByBoardIdIncludeFields(boardMiddleware.id);
             if (!boardItems) return res.json(null);
@@ -72,7 +72,7 @@ module.exports = {
             const boardItem = req.body;
             await validateCreateBoardItemForm(boardItem);
 
-            const board = res.board;
+            const board = req.board;
             Object.assign(boardItem, { boardId: board.id });
             const boardItemCreated = await boardItemService.createOne(boardItem);
 
@@ -92,7 +92,7 @@ module.exports = {
             if (!boardItem) return next(createError.BadRequest("Board item not found"));
 
             const { name } = req.body;
-            const board = res.board;
+            const board = req.board;
 
             const boardItemReq = {
                 id: boardItemId,

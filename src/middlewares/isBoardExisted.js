@@ -9,7 +9,7 @@ const isBoardExisted = async (req, res, next) => {
     const board = await boardService.getOneById(boardId);
     if (!board) return next(createError.BadRequest("Board not found"));
 
-    res.board = board.toJSON();
+    req.board = board.toJSON();
     return next();
 }
 

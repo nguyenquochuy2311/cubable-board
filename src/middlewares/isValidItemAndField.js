@@ -19,7 +19,7 @@ const isValidItemAndField = async (req, res, next) => {
     const field = await fieldService.getOneById(fieldId);
     if(!field) return next(createError.BadRequest("Field not found"));
 
-    res.itemField = {
+    req.itemField = {
         boardItem: boardItem,
         field: field
     }

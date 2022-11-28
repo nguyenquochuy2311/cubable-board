@@ -6,12 +6,10 @@ const v1BoardItemFieldRouter = require("./board-item-field.router");
 
 const v1Prefix = "/api/v1";
 
-const v1ApiRouter = (app) => {
+module.exports = (app) => {
     app.use(`${v1Prefix}/board`, v1BoardRouter);
 
     app.use(`${v1Prefix}/board-item`, v1BoardItemRouter);
 
     app.use(`${v1Prefix}/board-item-field`, v1BoardItemFieldRouter);
 };
-
-module.exports = v1ApiRouter;

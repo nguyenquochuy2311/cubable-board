@@ -1,7 +1,5 @@
-const HealthCheckRouter = (app) => {
+module.exports = (app) => {
     app.use("/api/health", (req, res) => {
         res.send("OK");
     });
 };
-
-module.exports = HealthCheckRouter;

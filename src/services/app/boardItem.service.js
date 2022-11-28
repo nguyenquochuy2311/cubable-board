@@ -34,7 +34,7 @@ const getOneById = async (id) => {
 
 /**
  * @param          
- * @return  []  boardItem array 
+ * @return  []  boardItem array include field object
  */
 const getAllByBoardIdIncludeFields = async (boardId) => {
     const boardItems = await boardItemRepository.findByBoardIdIncludeItemFields(boardId);

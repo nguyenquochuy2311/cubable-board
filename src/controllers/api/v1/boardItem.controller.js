@@ -15,20 +15,33 @@ module.exports = {
 
             const boardItems = await boardItemService.getAllByBoardIdIncludeFields(boardMiddleware.id);
             if (!boardItems) return res.json(null);
-            console.log(boardItems);
+
+            /** Handle response board items include and fields */
             let boardItemsRes = [];
-            // if (boardItems.boardItemFields) {
-            //     for (const boardItem of boardItems.boardItemFields) {
-            //         boardItemsRes.push({
-            //             id: boardItem.get("id"),
-            //             name: boardItem.get("name"),
-            //             value: boardItem.BoardItemFieldModel.value
-            //         })
-            //     }
-            // }
+            for (const boardItem of boardItems) {
+                let boardItemObj = {
+                    id: boardItem.get("id"),
+                    name: boardItem.get("name")
+                };
+                if(boardItem.boardItemFields) {
+                    const itemFields = boardItem.boardItemFields;
+                    let fields = [];
+                    for(const itemField of itemFields) {
+                        let field = {
+                            id: itemField.get("id"),
+                            name: itemField.get("name"),
+                            value: itemField.BoardItemFieldModel.get("value")
+                        }
+                        fields.push(field);
+                    }
+                    boardItemObj.fields = fields;
+                }
+                boardItemsRes.push(boardItemObj);
+            }
+            /** End handle response board items include and fields */
 
             return res.json({
-                items: boardItems.boardItemFields
+                items: boardItemsRes
             });
         } catch (error) {
             next(error);
@@ -121,30 +134,3 @@ module.exports = {
         }
     }
 }
-
-// let boardItemsRes = [];
-/** Handle response board include items and fields */
-// if (board.boardItems) {
-//     const boardItems = board.boardItems;
-//     for (const boardItemEle of boardItems) {
-//         const boardItemRes = {
-//             id: boardItemEle.id,
-//             name: boardItemEle.name
-//         };
-//         let boardItemFieldsRes = [];
-//         if(boardItemEle.boardItemFields) {
-//             const boardItemFields = boardItemEle.boardItemFields;
-//             for (const boardItemFieldEle of boardItemFields) {
-//                 const boardItemFieldRes = {
-//                     id: boardItemFieldEle.id,
-//                     name: boardItemFieldEle.name,
-//                     value: boardItemFieldEle.BoardItemFieldModel.value
-//                 }
-//                 boardItemFieldsRes.push(boardItemFieldRes);
-//             }
-//             boardItemRes.fields = boardItemFieldsRes;
-//         }
-//         boardItemsRes.push(boardItemRes);
-//     }
-// }
-/** End handle response board include items and fields */

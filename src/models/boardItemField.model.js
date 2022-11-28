@@ -11,7 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      
+      BoardItemFieldModel.belongsTo(models.BoardItemModel, {
+        as: "boardItem",
+        foreignKey: "boardItemId"
+      })
+
+      BoardItemFieldModel.belongsTo(models.FieldModel, {
+        as: "field",
+        foreignKey: "fieldId"
+      })
     }
 
     toJSON() {
@@ -27,6 +35,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       boardItemId: {
         type: DataTypes.INTEGER,
+        get() {
+          return this.getDataValue("boardItemId")
+        },
+        set(val) {
+          this.setDataValue("boardItemId", val)
+        }
       },
       fieldId: {
         type: DataTypes.INTEGER,
@@ -36,10 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
     }, {
-      sequelize,
-      tableName: "tbl_board_item_field",
-      modelName: "BoardItemFieldModel"
-    }
+    sequelize,
+    tableName: "tbl_board_item_field",
+    modelName: "BoardItemFieldModel"
+  }
   );
   return BoardItemFieldModel;
 };

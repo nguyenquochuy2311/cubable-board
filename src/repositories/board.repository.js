@@ -1,7 +1,6 @@
 const BaseRepository = require("./_base.repository");
 const Board = require("../models").BoardModel;
 const BoardItem = require("../models").BoardItemModel;
-
 class BoardRepository extends BaseRepository {
 
     constructor() {

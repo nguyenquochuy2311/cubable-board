@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const removePropertyObject = require("../../utils/removePropertyObject");
+const { removePropertyObject } = require("../../utils/removeFieldObject");
 
 const boardForm = Joi.object().keys({
     name: Joi.string().required(),
@@ -11,9 +11,8 @@ const keysExculed = ["description"];
 
 async function validationCreateBoardForm(request) {
     const boardValid = await boardForm.validateAsync(request);
-    const boardRequired = removePropertyObject(boardValid, keysExculed);
-    console.log(boardRequired);
-    return boardValid;
+    const boardAccess = removePropertyObject(boardValid, keysExculed);
+    return boardAccess;
 }
 
 module.exports = validationCreateBoardForm;

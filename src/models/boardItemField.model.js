@@ -16,12 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       BoardItemFieldModel.belongsTo(models.BoardItemModel, {
         as: "boardItem",
-        foreignKey: "boardItemId"
+        foreignKey: "boardItemId",
+        onDelete: "cascade",
       })
 
       BoardItemFieldModel.belongsTo(models.FieldModel, {
         as: "field",
-        foreignKey: "fieldId"
+        foreignKey: "fieldId",
+        onDelete: "cascade",
       })
     }
 

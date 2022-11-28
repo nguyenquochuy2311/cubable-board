@@ -5,14 +5,14 @@ const httpError = require("http-errors");
 
 /** Sync db */
 const db = require("./models");
-const type = { force: true }; // { alter: true }
-db.sequelize.sync({ force: true }).then(() => {
-    console.log("::Sync db success")
+const type = { force: true, match: /_sync$/ }; // { alter: true } || { force: true } || { alter: { drop: false } }
+db.sequelize.sync(type).then(() => {
+    console.log("::Sync complete")
 })
     .catch((error) => {
         throw error;
     });
-/**End sync db */
+/** End sync db */
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

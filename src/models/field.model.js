@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
 
       FieldModel.belongsTo(models.FieldTypeModel, {
         as: "fieldType",
-        foreignKey: "fieldTypeId"
+        foreignKey: "fieldTypeId",
+        onDelete: "cascade",
       })
     }
 
@@ -30,28 +31,38 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }
-  FieldModel.init(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        get() {
-          return this.getDataValue("name")
-        },
-        set(val) {
-          this.setDataValue("name", val)
-        }
+  FieldModel.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      get() {
+        return this.getDataValue("id")
       },
-      fieldTypeId: {
-        type: DataTypes.INTEGER,
-        get() {
-          return this.getDataValue("fieldTypeId")
-        },
-        set(val) {
-          this.setDataValue("fieldTypeId", val)
-        }
+      set(val) {
+        this.setDataValue("id", val)
       }
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      get() {
+        return this.getDataValue("name")
+      },
+      set(val) {
+        this.setDataValue("name", val)
+      }
+    },
+    fieldTypeId: {
+      type: DataTypes.INTEGER,
+      get() {
+        return this.getDataValue("fieldTypeId")
+      },
+      set(val) {
+        this.setDataValue("fieldTypeId", val)
+      }
+    }
+  },
     {
       sequelize,
       tableName: "tbl_field",

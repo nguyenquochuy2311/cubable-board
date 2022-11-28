@@ -13,13 +13,31 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       FieldTypeModel.hasMany(models.FieldModel, {
         as: "fields",
-        foreignKey: "fieldTypeId"
+        foreignKey: "fieldTypeId",
+        onDelete: "cascade",
       })
     }
   }
   FieldTypeModel.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      get() {
+        return this.getDataValue("id")
+      },
+      set(val) {
+        this.setDataValue("id", val)
+      }
+    },
     name: {
       type: DataTypes.STRING,
+      get() {
+        return this.getDataValue("name")
+      },
+      set(val) {
+        this.setDataValue("name", val)
+      }
     }
   }, {
     sequelize,

@@ -5,11 +5,12 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class BoardModel extends Model {
-        
+
         static associate(models) {
             BoardModel.hasMany(models.BoardItemModel, {
                 as: "boardItems",
-                foreignKey: "boardId"
+                foreignKey: "boardId",
+                onDelete: "cascade",
             })
         }
 
@@ -23,6 +24,17 @@ module.exports = (sequelize, DataTypes) => {
 
     /** Define sequelize model */
     BoardModel.init({
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+            get() {
+                return this.getDataValue("id")
+            },
+            set(val) {
+                this.setDataValue("id", val)
+            }
+        },
         title: {
             type: DataTypes.STRING,
             get() {

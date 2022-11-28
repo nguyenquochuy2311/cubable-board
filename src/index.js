@@ -5,7 +5,7 @@ const httpError = require("http-errors");
 
 /** Sync db */
 const db = require("./models");
-const type = { alter: { drop: false } }; // { alter: true } || { force: true } || { alter: { drop: false } } || { alter: { drop: false } }
+const type = { alter: { drop: false } }; // { alter: true } || { force: true } || { alter: { drop: false } } || { force: true, match: /_test$/ }
 db.sequelize.sync(type).then(() => {
     console.log("::Sync complete");
 }).catch((error) => {

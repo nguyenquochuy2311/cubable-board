@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const { removePropertyObject } = require("../../utils/removeFieldObject");
+const removePropertyObject = require("../../utils/removeFieldObject");
 
 const boardForm = Joi.object().keys({
     name: Joi.string().required(),

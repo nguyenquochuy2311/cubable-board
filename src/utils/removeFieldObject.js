@@ -6,12 +6,12 @@
 function removeFieldObject(obj = {}, fields = []) {
     if (!obj || typeof obj !== "object") return {};
 
-    if(!fields || !fields.length) return obj;
+    if (!fields || !fields.length) return obj;
 
-    for(const field of fields) {
+    for (const field of fields) {
         delete obj[field];
     }
     return obj;
 }
 
-module.exports = { removeFieldObject };
+module.exports = removeFieldObject;

@@ -18,11 +18,10 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+/** Define router api */
 require("./routes/health.router")(app);
-
-/** V1 */
-const v1ApiRouter = require("./routes/api/v1");
-v1ApiRouter(app);
+require("./routes/api/v1")(app);
+/**End define router api */
 
 app.use((req, res, next)  => {
     next(httpError.NotFound("API Not Found"));

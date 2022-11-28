@@ -64,7 +64,6 @@ module.exports = {
             };
 
             // const board = res.board;
-
             return res.json(boardItemRes);
         } catch (error) {
             next(error);

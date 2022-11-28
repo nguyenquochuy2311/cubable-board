@@ -5,6 +5,7 @@ const httpError = require("http-errors");
 
 /** Sync db */
 const db = require("./models");
+const type = { force: true }; // { alter: true }
 db.sequelize.sync({ force: true }).then(() => {
     console.log("::Sync db success")
 })

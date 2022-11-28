@@ -55,7 +55,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       tableName: "tbl_field",
-      modelName: "FieldModel"
+      modelName: "FieldModel",
+      timestamps: true
     }
   );
   return FieldModel;

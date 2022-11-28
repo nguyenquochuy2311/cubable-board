@@ -3,26 +3,24 @@ const createError = require("http-errors");
 const BoardItem = require("../models").BoardItemModel;
 const Field = require("../models").FieldModel;
 
+const boardService = require("../services/app/board.service");
+const fieldService = require("../services/app/field.service");
+
 const isValidItemAndField = async (req, res, next) => {
-    const boardItemId = parseInt(req.params.boardItemId);
-    const fieldId = parseInt(req.params.fieldId);
+    const { boardItemId, fieldId } = req.params;
 
     if (!boardItemId ||
         !fieldId ||
-        !Number.isInteger(boardItemId) ||
-        !Number.isInteger(fieldId)) {
+        !Number.isInteger(parseInt(boardItemId)) ||
+        !Number.isInteger(parseInt(fieldId))) {
 
         return next(createError.NotFound());
     }
 
-    const boardItem = await BoardItem.findByPk(boardItemId, {
-        attributes: ["id", "name"]
-    });
+    const boardItem = await boardService.getOneById(boardItemId);
     if (!boardItem) return next(createError.BadRequest("Board not found"));
 
-    const field = await Field.findByPk(fieldId, {
-        attributes: ["id", "name"]
-    });
+    const field = await fieldService.getOneById(fieldId);
     if(!field) return next(createError.BadRequest("Field not found"));
 
     res.itemField = {

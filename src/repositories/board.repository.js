@@ -20,7 +20,7 @@ class BoardRepository extends BaseRepository {
 
     /**
      * @param  _                board id
-     * @return []               board object
+     * @return {}               board object
      */
     async findByPkBoard(id) {
         const attributes = ["id", "title"];

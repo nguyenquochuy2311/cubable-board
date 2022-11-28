@@ -1,8 +1,4 @@
 const createError = require("http-errors");
-
-const Board = require("../../../models").BoardModel;
-const BoardItem = require("../../../models").BoardItemModel;
-const Field = require("../../../models").FieldModel;
 const boardItemService = require("../../../services/app/boardItem.service");
 const validateCreateBoardItemForm = require("../../../validation/boardItem/create");
 const validateBoardItemQueryString = require("../../../validation/boardItem/query");

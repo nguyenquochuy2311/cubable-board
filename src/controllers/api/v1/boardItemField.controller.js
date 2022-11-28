@@ -4,6 +4,7 @@ const BoardItemField = require("../../../models").BoardItemFieldModel;
 const validateCreateOrUpdateBoardItemFieldForm = require("../../../validation/boardItemField/createOrUpdate");
 
 const crudService = require("../../../services/app/crud.service");
+const boardItemFieldService = require("../../../services/app/boardItemField.service");
 
 module.exports = {
     // POST - /:boardItemId/:fieldId
@@ -34,12 +35,9 @@ module.exports = {
         try {
             const itemFieldMiddleware = res.itemField;
 
-            const itemFieldAttr = ["id", "value"];
-            const itemFieldWhere = {
-                boardItemId: itemFieldMiddleware.boardItem.id,
-                fieldId: itemFieldMiddleware.field.id
-            }
-            const itemField = await crudService.findOne(next, BoardItemField, itemFieldAttr, itemFieldWhere);
+            const itemId = itemFieldMiddleware.boardItem.id;
+            const fieldId = itemFieldMiddleware.field.id;
+            const itemField = await boardItemFieldService.getOneByItemIdAndFieldId(itemId, fieldId);
 
             if (!itemField) return res.json(null);
 

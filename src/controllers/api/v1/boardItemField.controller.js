@@ -1,9 +1,5 @@
 const createError = require("http-errors");
-
-const BoardItemField = require("../../../models").BoardItemFieldModel;
 const validateCreateOrUpdateBoardItemFieldForm = require("../../../validation/boardItemField/createOrUpdate");
-
-const crudService = require("../../../services/app/crud.service");
 const boardItemFieldService = require("../../../services/app/boardItemField.service");
 
 module.exports = {
@@ -15,15 +11,14 @@ module.exports = {
 
             const itemFieldMiddleware = res.itemField;
 
-            const itemFieldWhere = {
+            const itemField = {
+                value: value,
                 boardItemId: itemFieldMiddleware.boardItem.id,
                 fieldId: itemFieldMiddleware.field.id
-            }
-            const itemFieldReq = Object.assign({
-                value: value
-            }, itemFieldWhere);
+            };
+            const itemFieldCreatedOrUpdated = await boardItemFieldService.createOrUpdate(itemField);
+            if(!itemFieldCreatedOrUpdated) next(createError.BadRequest("Create or update failed"));
 
-            const itemFieldCreatedOrUpdated = await crudService.createOrUpdate(next, BoardItemField, itemFieldReq, itemFieldWhere);
             return res.json(itemFieldCreatedOrUpdated);
         } catch (error) {
             next(error);

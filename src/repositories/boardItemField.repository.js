@@ -20,6 +20,19 @@ class BoardItemFieldRepository extends BaseRepository {
         const itemField = await this.findOne(attributes, where);
         return itemField;
     }
+
+    /**
+     * @param  {}               board item field
+     * @return {}               board item field created or updated
+     */
+    async createOrUpdateItemField(itemField) {
+        const where = {
+            boardItemId: itemField.boardItemId,
+            fieldId: itemField.fieldId
+        }
+        const itemFieldCreatedOrUpdated = this.createOrUpdate(itemField, where);
+        return itemFieldCreatedOrUpdated;    
+    }
 }
 
 module.exports = new BoardItemFieldRepository;

@@ -9,6 +9,16 @@ const getOneByItemIdAndFieldId = async (itemId, fieldId) => {
     return itemField;
 }
 
+/**
+ * @param   _   item id, field id  
+ * @return  {}  item field
+ */
+ const createOrUpdate = async (itemField) => {
+    const itemFieldCreatedOrUpdated = await boardItemFieldRepository.createOrUpdateItemField(itemField);
+    return itemFieldCreatedOrUpdated;
+}
+
 module.exports = {
+    createOrUpdate,
     getOneByItemIdAndFieldId
 }

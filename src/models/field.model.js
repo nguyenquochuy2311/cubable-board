@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "boardItemFields",
         foreignKey: "fieldId"
       })
+
+      FieldModel.belongsTo(models.FieldTypeModel, {
+        as: "fieldType",
+        foreignKey: "fieldTypeId"
+      })
     }
 
     toJSON() {

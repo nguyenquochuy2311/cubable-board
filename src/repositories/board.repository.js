@@ -13,7 +13,7 @@ class BoardRepository extends BaseRepository {
      * @return []               board array
      */
     async findAllBoard() {
-        const attributes = ["id", "title"];
+        const attributes = ["id", "name"];
         const boards = await this.findAll(attributes);
         return boards;
     }
@@ -23,7 +23,7 @@ class BoardRepository extends BaseRepository {
      * @return {}               board object
      */
     async findByPkBoard(id) {
-        const attributes = ["id", "title"];
+        const attributes = ["id", "name"];
         const board = await this.findByPk(attributes, id);
         return board;
     }
@@ -33,7 +33,7 @@ class BoardRepository extends BaseRepository {
      * @return {}               board object include items
      */
     async findByPkBoardIncludeItems(id) {
-        const attributes = ["id", "title"];
+        const attributes = ["id", "name"];
         const board = await Board.findByPk(id, {
             attributes: attributes,
             include: [{

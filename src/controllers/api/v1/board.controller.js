@@ -38,7 +38,7 @@ module.exports = {
 
             return res.json({
                 id: board.get("id"),
-                title: board.get("title"),
+                name: board.get("name"),
                 items: boardItemsRes
             });
         } catch (error) {
@@ -68,10 +68,10 @@ module.exports = {
             const board = await boardService.getOneById(boardId);
             if (!board) return next(createError.BadRequest("Board not found"));
 
-            const { title } = req.body;
+            const { name } = req.body;
             const boardReq = {
                 id: boardId,
-                title: title || board.get("title")
+                name: name || board.get("name")
             };
             const boardUpdated = await boardService.updateById(boardReq);
             if (!boardUpdated) return next(createError.BadRequest("Update failed"));

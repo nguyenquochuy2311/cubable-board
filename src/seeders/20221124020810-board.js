@@ -5,12 +5,12 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert("tbl_board", [
       {
-        title: "Board 1",
+        name: "Board 1",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        title: "Board 2",
+        name: "Board 2",
         createdAt: new Date(),
         updatedAt: new Date()
       }

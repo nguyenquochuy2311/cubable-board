@@ -1,8 +1,4 @@
 const createError = require("http-errors");
-
-const BoardItem = require("../models").BoardItemModel;
-const Field = require("../models").FieldModel;
-
 const boardService = require("../services/app/board.service");
 const fieldService = require("../services/app/field.service");
 

@@ -21,8 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     toJSON() {
       return {
         id: this.getDataValue("id"),
-        name: this.name,
-        // boardId: this.boardId
+        name: this.getDataValue("name")
       }
     }
   }
@@ -30,14 +29,23 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        get() {
+          return this.getDataValue("name")
+        },
+        set(val) {
+          this.setDataValue("name", val)
+        }
       },
       fieldTypeId: {
-        type: DataTypes.INTEGER
-      },
-      // boardId: {
-      //   type: DataTypes.INTEGER
-      // }
+        type: DataTypes.INTEGER,
+        get() {
+          return this.getDataValue("fieldTypeId")
+        },
+        set(val) {
+          this.setDataValue("fieldTypeId", val)
+        }
+      }
     },
     {
       sequelize,

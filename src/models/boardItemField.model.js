@@ -33,6 +33,16 @@ module.exports = (sequelize, DataTypes) => {
   }
   BoardItemFieldModel.init(
     {
+      value: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        get() {
+          return this.getDataValue("value")
+        },
+        set(val) {
+          this.setDataValue("value", val)
+        }
+      },
       boardItemId: {
         type: DataTypes.INTEGER,
         get() {
@@ -44,11 +54,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       fieldId: {
         type: DataTypes.INTEGER,
-      },
-      value: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
+        get() {
+          return this.getDataValue("fieldId")
+        },
+        set(val) {
+          this.setDataValue("fieldId", val)
+        }
+      }
     }, {
     sequelize,
     tableName: "tbl_board_item_field",

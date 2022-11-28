@@ -1,1 +1,1 @@
-https://documenter.getpostman.com/view/16923219/2s8YsqVuzV#761395bc-80df-435f-be65-0bcf32201311
+https://documenter.getpostman.com/view/16923219/2s8YsqVuzV

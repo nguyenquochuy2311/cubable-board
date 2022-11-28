@@ -64,7 +64,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
     sequelize,
     tableName: "tbl_board_item_field",
-    modelName: "BoardItemFieldModel"
+    modelName: "BoardItemFieldModel",
+    indexs: [{ unique: true, fields: ["boardItemId", "fieldId"] }]
   }
   );
   return BoardItemFieldModel;

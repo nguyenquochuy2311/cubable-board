@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const boardItemForm = Joi.object().keys({
-    name: Joi.string().required()
+    // name: Joi.string().required()
 })
 
 async function validateCreateBoardItemForm(request) {

@@ -51,7 +51,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       value: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: "Unnamed",
         get() {
           return this.getDataValue("value")
         },

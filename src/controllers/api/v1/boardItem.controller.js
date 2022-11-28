@@ -1,5 +1,7 @@
 const createError = require("http-errors");
 const boardItemService = require("../../../services/app/boardItem.service");
+const fieldService = require("../../../services/app/field.service");
+const boardItemFieldService = require("../../../services/app/boardItemField.service");
 const validateCreateBoardItemForm = require("../../../validation/boardItem/create");
 const validateBoardItemQueryString = require("../../../validation/boardItem/query");
 
@@ -74,7 +76,18 @@ module.exports = {
 
             const board = req.board;
             Object.assign(boardItem, { boardId: board.id });
+
+            const fieldCreated = await fieldService.createDefaultField();
+            if(!fieldCreated) next(createError.BadRequest("Field need create")); 
+
             const boardItemCreated = await boardItemService.createOne(boardItem);
+            if(!boardItemCreated) next(createError.BadRequest("Create item failed"));
+                        
+            const itemFieldCreated = await boardItemFieldService.createOrUpdate({
+                boardItemId: boardItemCreated.get("id"),
+                fieldId: fieldCreated.get("id")
+            })
+            if(!itemFieldCreated) next(createError.BadRequest("Create item field failed"));
 
             return res.json(boardItemCreated);
         } catch (error) {

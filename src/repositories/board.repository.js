@@ -36,7 +36,7 @@ class BoardRepository extends BaseRepository {
         const board = await Board.findByPk(id, {
             attributes: attributes,
             include: [{
-                attributes: ["id", "name"],
+                attributes: ["id"],
                 model: BoardItem,
                 as: "boardItems"
             }]

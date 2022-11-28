@@ -9,6 +9,26 @@ const getOneById = async (id) => {
     return field;
 }
 
+/**
+ * @param   {}  field object       
+ * @return  {}  field object 
+ */
+const createOne = async (data) => {
+    const fieldCreated = await fieldRepository.create(data);
+    return fieldCreated;
+}
+
+/**
+ * @param   {}  field object       
+ * @return  {}  field object 
+ */
+ const createDefaultField = async () => {
+    const fieldCreated = await fieldRepository.create();
+    return fieldCreated;
+}
+
 module.exports = {
-    getOneById
+    getOneById,
+    createOne,
+    createDefaultField
 }

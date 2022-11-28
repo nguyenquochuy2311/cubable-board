@@ -43,15 +43,6 @@ module.exports = (sequelize, DataTypes) => {
         this.setDataValue("id", val)
       }
     },
-    name: {
-      type: DataTypes.STRING,
-      get() {
-        return this.getDataValue("name");
-      },
-      set(val) {
-        this.setDataValue("name", val);
-      }
-    },
     boardId: {
       type: DataTypes.INTEGER,
       get() {

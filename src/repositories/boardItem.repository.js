@@ -12,7 +12,7 @@ class BoardItemRepository extends BaseRepository {
      * @return []               board item array
      */
     async findAllBoardItem() {
-        const attributes = ["id", "name", "boardId"];
+        const attributes = ["id", "boardId"];
         const boardItems = await this.findAll(attributes);
         return boardItems;
     }
@@ -22,7 +22,7 @@ class BoardItemRepository extends BaseRepository {
      * @return {}               board item object
      */
     async findByPkBoardItem(id) {
-        const attributes = ["id", "name", "boardId"];
+        const attributes = ["id", "boardId"];
         const boardItem = await this.findByPk(attributes, id);
         return boardItem;
     }
@@ -32,7 +32,7 @@ class BoardItemRepository extends BaseRepository {
      * @return []               board items array include fields each item
      */
     async findByBoardIdIncludeFields(boardId) {
-        const attributes = ["id", "name", "boardId"];
+        const attributes = ["id", "boardId"];
         const boardItems = await BoardItem.findAll({
             attributes: attributes,
             include: [{
@@ -52,7 +52,7 @@ class BoardItemRepository extends BaseRepository {
      * @return {}               board item object include fields
      */
     async findByPkIncludeFields(id) {
-        const attributes = ["id", "name", "boardId"];
+        const attributes = ["id", "boardId"];
         const boardItem = await BoardItem.findByPk(id, {
             attributes: attributes,
             include: [{

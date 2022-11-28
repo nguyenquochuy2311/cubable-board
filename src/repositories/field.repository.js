@@ -16,6 +16,10 @@ class FieldRepository extends BaseRepository {
         const field = await this.findByPk(attributes, id);
         return field;
     }
+
+    async createDefault() {
+        const fieldCreated = await this.create()
+    }
 }
 
 module.exports = new FieldRepository;

@@ -45,7 +45,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: "Name",
       get() {
         return this.getDataValue("name")
       },
@@ -55,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     fieldTypeId: {
       type: DataTypes.INTEGER,
+      defaultValue: 1,
       get() {
         return this.getDataValue("fieldTypeId")
       },
@@ -70,5 +72,11 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   );
+
+  /** Hook */
+  // FieldModel.beforeCreate((field, option) => {
+  //   field.name = option.name || "Unamed"
+  // }
+  /** End hook */
   return FieldModel;
 };

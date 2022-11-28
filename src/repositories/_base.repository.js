@@ -11,7 +11,7 @@ module.exports = class BaseRepository {
      * @param  {} where         object || {}
      * @return                  object
      */
-    async create(data, where = {}) {
+    async create(data = {}, where = {}) {
         const dataCreated = await this.model.create(data, {
             where: where
         });
@@ -22,7 +22,7 @@ module.exports = class BaseRepository {
      * @param  {} data          object include first key as primary key
      * @return                  object
      */
-    async updateByPk(data) {
+    async updateByPk(data = {}) {
         const [firstKey, firstValue] = Object.entries(data)[0];
         const where = {};  
         where[firstKey] = firstValue;
@@ -39,7 +39,7 @@ module.exports = class BaseRepository {
      * @param  {} where         object || {}
      * @return                  object
      */
-    async update(data, where = {}) {
+    async update(data = {}, where = {}) {
         const isUpdated = await this.model.update(data, { where: where });
         if (isUpdated[0] === 1) {
             const dataUpdated = await this.model.findOne({ where: where });
@@ -53,7 +53,7 @@ module.exports = class BaseRepository {
      * @param  {} where         object || {}
      * @return                  object
      */
-    async createOrUpdate(data, where = {}) {
+    async createOrUpdate(data = {}, where = {}) {
         const dataExisted = await this.model.findOne({ where: where });
         if (!dataExisted) {
             const dataCreated = await this.model.create(data);

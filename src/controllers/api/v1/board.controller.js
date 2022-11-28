@@ -50,10 +50,9 @@ module.exports = {
     create: async (req, res, next) => {
         try {
             const board = req.body;
-            await validateCreateBoardForm(board);
-
-            const boardCreated = await boardService.createOne(board);
-
+            const boardValid = await validateCreateBoardForm(board);
+            
+            const boardCreated = await boardService.createOne(boardValid);
             return res.json(boardCreated);
         } catch (error) {
             next(error);

@@ -1,5 +1,7 @@
 'use strict';
 
+const { isString } = require("../utils/isString");
+
 const {
     Model
 } = require('sequelize');
@@ -43,6 +45,15 @@ module.exports = (sequelize, DataTypes) => {
             set(val) {
                 return this.setDataValue("name", val);
             }
+        },
+        description: {
+            type: DataTypes.STRING,
+            get() {
+                return this.getDataValue("description");
+            },
+            set(val) {
+                return this.setDataValue("description", val);
+            }
         }
     }, {
         sequelize,
@@ -50,6 +61,6 @@ module.exports = (sequelize, DataTypes) => {
         modelName: "BoardModel",
         timestamps: true
     });
-
+    
     return BoardModel;
 };

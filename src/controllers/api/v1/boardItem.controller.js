@@ -63,12 +63,9 @@ module.exports = {
                 fields: boardItem.boardItemFields || []
             };
 
-            const board = res.board;
+            // const board = res.board;
 
-            return res.send({
-                ...boardItemRes,
-                board: board
-            });
+            return res.json(boardItemRes);
         } catch (error) {
             next(error);
         }

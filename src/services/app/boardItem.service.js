@@ -1,8 +1,3 @@
-const Board = require("../../models").BoardModel;
-const BoardItem = require("../../models").BoardItemModel;
-const Field = require("../../models").FieldModel;
-const crudService = require("./crud.service");
-const boardItemService = require("../../repositories/boardItem.repository");
 const boardItemRepository = require("../../repositories/boardItem.repository");
 
 /**
@@ -10,7 +5,7 @@ const boardItemRepository = require("../../repositories/boardItem.repository");
  * @return  {}  board item object 
  */
 const createOne = async (data) => {
-    const dataCreated = await boardItemService.create(data);
+    const dataCreated = await boardItemRepository.create(data);
     return dataCreated;
 }
 
@@ -19,7 +14,7 @@ const createOne = async (data) => {
  * @return  {}  board item object 
  */
 const updateById = async (data) => {
-    const dataUpdated = await boardItemService.updateByPk(data);
+    const dataUpdated = await boardItemRepository.updateByPk(data);
     return dataUpdated;
 }
 
@@ -28,17 +23,26 @@ const updateById = async (data) => {
  * @return  {}  board item object 
  */
 const getOneById = async (id) => {
-    const boardItem = await boardItemService.findByPkBoardItem(id);
+    const boardItem = await boardItemRepository.findByPkBoardItem(id);
     return boardItem;
 }
 
 /**
  * @param          
- * @return  []  boardItem array include field object
+ * @return  []  board item array include field array
  */
 const getAllByBoardIdIncludeFields = async (boardId) => {
-    const boardItems = await boardItemRepository.findByBoardIdIncludeItemFields(boardId);
+    const boardItems = await boardItemRepository.findByBoardIdIncludeFields(boardId);
     return boardItems;
+};
+
+/**
+ * @param          
+ * @return  {}  board item object include field array
+ */
+ const getOneByIdIncludeFields = async (boardItemId) => {
+    const boardItem = await boardItemRepository.findByPkIncludeFields(boardItemId);
+    return boardItem;
 };
 
 /**
@@ -55,6 +59,7 @@ module.exports = {
     updateById,
     getOneById,
     getAllByBoardIdIncludeFields,
-    deleteById,
+    getOneByIdIncludeFields,
+    deleteById
 }
 

@@ -19,7 +19,7 @@ class BoardItemRepository extends BaseRepository {
         return boardItem;
     }
 
-    async findByBoardIdIncludeItemFields(boardId) {
+    async findByBoardIdIncludeFields(boardId) {
         const attributes = ["id", "name", "boardId"];
         const boardItems = await BoardItem.findAll({
             attributes: attributes,
@@ -33,6 +33,19 @@ class BoardItemRepository extends BaseRepository {
             }
         });
         return boardItems;
+    }
+
+    async findByPkIncludeFields(id) {
+        const attributes = ["id", "name", "boardId"];
+        const boardItem = await BoardItem.findByPk(id, {
+            attributes: attributes,
+            include: [{
+                model: Field,
+                as: "boardItemFields",
+                attributes: ["id", "name"]
+            }]
+        });
+        return boardItem;
     }
 
     async destroyByPkBoardItem(id) {

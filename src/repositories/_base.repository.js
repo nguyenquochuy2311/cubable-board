@@ -100,8 +100,9 @@ module.exports = class BaseRepository {
      */
     async findOne(attributes = [], where = {}) {
         const data = await this.model.findOne({
-            attributes: attributes.length ? attributes : null
-        }, { where: where });
+            attributes: attributes.length ? attributes : null,
+            where: where
+        });
         return data;
     }
 

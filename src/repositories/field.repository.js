@@ -1,6 +1,7 @@
 const BaseRepository = require("./_base.repository");
 const Field = require("../models").FieldModel;
-
+const FieldType = require("../models").FieldTypeModel;
+const Board = require("../models").BoardModel;
 class FieldRepository extends BaseRepository {
 
     constructor() {
@@ -18,11 +19,16 @@ class FieldRepository extends BaseRepository {
     }
 
     /**
-     * @param  _                
+     * @param  _                board id
      * @return {}               field object
      */
-    async createDefault() {
-        const fieldCreated = await this.create();
+    async createDefault(boardId) {
+        const fieldTypeFirst = await FieldType.findOne();
+        const fieldDefault = {
+            fieldTypeId: fieldTypeFirst.get("id"),
+            boardId: boardId
+        }
+        const fieldCreated = await this.create(fieldDefault);
         return fieldCreated;
     }
 

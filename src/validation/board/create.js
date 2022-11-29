@@ -4,7 +4,8 @@ const removePropertyObject = require("../../utils/removeFieldObject");
 
 const boardForm = Joi.object().keys({
     name: Joi.string().required(),
-    description: Joi.string()
+    description: Joi.string(),
+    value: Joi.string().required()
 })
 
 const keysExculed = ["description"];

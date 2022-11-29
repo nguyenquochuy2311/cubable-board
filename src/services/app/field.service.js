@@ -19,11 +19,11 @@ const createOne = async (data) => {
 }
 
 /**
- * @param   {}  field object       
+ * @param   _   board id       
  * @return  {}  field object 
  */
-const createDefaultField = async () => {
-    const fieldCreated = await fieldRepository.create();
+const createDefaultField = async (boardId) => {
+    const fieldCreated = await fieldRepository.createDefault(boardId);
     return fieldCreated;
 }
 

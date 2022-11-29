@@ -99,10 +99,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  /** Hook */
-  // FieldModel.beforeCreate((field, option) => {
-  //   field.name = option.name || "Unamed"
-  // }
-  /** End hook */
   return FieldModel;
 };

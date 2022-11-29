@@ -60,32 +60,14 @@ module.exports = {
             if(!boardCreated) return next(createError.BadRequest("Create board failed"));
             
             /** 2. Create field */
-            const defaultFieldCreated = await fieldService.createDefaultField(boardCreated.get("id"));
+            const defaultFieldReq = {
+                name: boardValid.nameField,
+                boardId: boardCreated.get("id")
+            }
+            const defaultFieldCreated = await fieldService.createDefaultField(defaultFieldReq);
             if(!defaultFieldCreated) {
                 const boardDeleted = await boardService.deleteById(boardCreated.get("id"));
                 return next(createError.BadRequest("Create field default failed"));
-            }
-
-            /** 3. Create board item */
-            const itemCreated = await itemService.createOne({ boardId: boardCreated.get("id") });
-            if(!itemCreated) {
-                const boardDeleted = await boardService.deleteById(boardCreated.get("id"));
-                const fieldDeleted = await fieldService.deleteById(defaultFieldCreated.get("id"));
-                return next(createError.BadRequest("Create board item failed"));
-            }
-            
-            /** 4. Create board item field */
-            const itemFieldReq = {
-                value: boardValid.value,
-                boardItemId: itemCreated.get("id"),
-                fieldId: defaultFieldCreated.get("id")
-            }
-            const itemField = await itemFieldService.createOrUpdate(itemFieldReq);
-            if(!itemField) {
-                const boardDeleted = await boardService.deleteById(boardCreated.get("id"));
-                const fieldDeleted = await fieldService.deleteById(defaultFieldCreated.get("id"));
-                const itemFieldDeleted = await itemService.deleteById(itemCreated.get("id"));
-                return next(createError.BadRequest("Create board item field failed"));
             }
 
             return res.json(boardCreated);

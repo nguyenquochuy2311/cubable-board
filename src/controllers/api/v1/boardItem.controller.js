@@ -71,25 +71,26 @@ module.exports = {
     // POST - /:boardId
     create: async (req, res, next) => {
         try {
-            const boardItem = req.body;
-            await validateCreateBoardItemForm(boardItem);
-
             const board = req.board;
-            Object.assign(boardItem, { boardId: board.id });
+            const boardItemValid = await validateCreateBoardItemForm(req.body);
 
-            const fieldCreated = await fieldService.createDefaultField();
-            if(!fieldCreated) next(createError.BadRequest("Field need create first")); 
+            const field = await fieldService.getOneById(boardItemValid.fieldId);
+            if(!field || board.id != field.boardId) return next(createError.BadRequest("Field not found"));
 
-            const boardItemCreated = await boardItemService.createOne(boardItem);
-            if(!boardItemCreated) next(createError.BadRequest("Create item failed"));
-                        
+            const itemCreated = await boardItemService.createOne({ boardId: board.id });
+            if(!itemCreated) return next(createError.BadRequest("Create failed"));
+
             const itemFieldCreated = await boardItemFieldService.createOrUpdate({
-                boardItemId: boardItemCreated.get("id"),
-                fieldId: fieldCreated.get("id")
+                value: boardItemValid.value,
+                boardItemId: itemCreated.get("id"),
+                fieldId: field.get("id")
             })
-            if(!itemFieldCreated) next(createError.BadRequest("Create item field failed"));
+            if(!itemFieldCreated) {
+                const itemDeleted = await boardItemService.deleteById(itemCreated.get("id"));
+                return next(createError.BadRequest("Create failed"));
+            }
 
-            return res.json(boardItemCreated);
+            return res.json(itemCreated);
         } catch (error) {
             next(error);
         }
@@ -98,24 +99,27 @@ module.exports = {
     // PUT - /:boardId/filter?boardItemId=:boardItemId
     update: async (req, res, next) => {
         try {
-            await validateBoardItemQueryString(req.query);
-
             const { boardItemId } = req.query;
+            
             const boardItem = await boardItemService.getOneById(boardItemId);
-            if (!boardItem) return next(createError.BadRequest("Board item not found"));
+            if(!boardItem) return next(createError.BadRequest("Board item not found"));
 
-            const { name } = req.body;
-            const board = req.board;
+            const boardValid = await validateCreateBoardItemForm(req.body);
 
-            const boardItemReq = {
-                id: boardItemId,
-                name: name || boardItem.get("name"),
-                boardId: board.id
-            };
-            const boardItemUpdated = await boardItemService.updateById(boardItemReq);
-            if (!boardItemUpdated) return next(createError.BadRequest("Updated failed"));
+            const field = await fieldService.getOneById(boardValid.fieldId);
+            if(!field) return next(createError.BadRequest("Field not found"));
 
-            return res.json(boardItemUpdated);
+            const itemField = await boardItemFieldService.createOrUpdate({
+                value: boardValid.value,
+                boardItemId: boardItem.get("id"),
+                fieldId: field.get("id")
+            });
+            if(!itemField) return next(createError.BadRequest("Update failed"));
+
+            return res.json({
+                id: itemField.get("id"),
+                value: itemField.get("value")
+            });
         } catch (error) {
             next(error);
         }

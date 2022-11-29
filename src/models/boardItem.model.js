@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       return {
         id: this.getDataValue("id"),
         name: this.get("name"),
-        boardId: this.get("boardId")
+        // boardId: this.get("boardId")
       }
     }
   }

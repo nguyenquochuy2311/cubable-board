@@ -19,14 +19,17 @@ class FieldRepository extends BaseRepository {
     }
 
     /**
-     * @param  _                board id
+     * @param  {}               { nameField: "Name", boardId: 1 }
      * @return {}               field object
      */
-    async createDefault(boardId) {
+    async createDefault(data) {
+        if(!data.boardId) return {};
+
         const fieldTypeFirst = await FieldType.findOne();
         const fieldDefault = {
+            name: data.nameField || "Name",
             fieldTypeId: fieldTypeFirst.get("id"),
-            boardId: boardId
+            boardId: data.boardId
         }
         const fieldCreated = await this.create(fieldDefault);
         return fieldCreated;

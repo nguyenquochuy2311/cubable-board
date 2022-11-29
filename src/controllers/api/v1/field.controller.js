@@ -40,7 +40,7 @@ module.exports = {
             const fieldType = await fieldTypeService.getOneById(fieldValid.fieldTypeId);
             if (!fieldType) return next(createError.BadRequest("Field type not found"));
 
-            const fieldTypeCreated = await fieldTypeService.createOne(fieldValid);
+            const fieldTypeCreated = await fieldService.createOne(fieldValid);
             return res.json(fieldTypeCreated);
         } catch (error) {
             next(error);

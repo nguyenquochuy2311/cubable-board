@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
       })
     }
+
+    toJSON() {
+      return {
+        id: this.getDataValue("id"),
+        name: this.getDataValue("name")
+      }
+    }
   }
   FieldTypeModel.init({
     id: {

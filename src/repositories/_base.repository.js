@@ -74,8 +74,9 @@ module.exports = class BaseRepository {
      */
     async findAll(attributes = [], where = {}) {
         const data = await this.model.findAll({
-            attributes: attributes.length ? attributes : null
-        }, { where: where });
+            attributes: attributes.length ? attributes : null,
+            where: where
+        });
         return data;
     }
 

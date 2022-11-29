@@ -1,5 +1,5 @@
 const createError = require("http-errors");
-const boardService = require("../services/app/board.service");
+const boardItemService = require("../services/app/boardItem.service");
 const fieldService = require("../services/app/field.service");
 
 const isValidItemAndField = async (req, res, next) => {
@@ -13,8 +13,8 @@ const isValidItemAndField = async (req, res, next) => {
         return next(createError.NotFound());
     }
 
-    const boardItem = await boardService.getOneById(boardItemId);
-    if (!boardItem) return next(createError.BadRequest("Board not found"));
+    const boardItem = await boardItemService.getOneById(boardItemId);
+    if (!boardItem) return next(createError.BadRequest("Board item not found"));
 
     const field = await fieldService.getOneById(fieldId);
     if(!field) return next(createError.BadRequest("Field not found"));

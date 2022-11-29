@@ -29,11 +29,7 @@ module.exports = {
     // PUT - /:id
     update: async (req, res, next) => {
         try {
-            try {
-                return res.json({});
-            } catch (error) {
-                next(error);
-            }
+            return res.json({});
         } catch (error) {
             next(error);
         }
@@ -42,11 +38,7 @@ module.exports = {
     // DELETE - /:id
     destroy: async (req, res, next) => {
         try {
-            try {
-                return res.json({});
-            } catch (error) {
-                next(error);
-            }
+            return res.json({});
         } catch (error) {
             next(error);
         }

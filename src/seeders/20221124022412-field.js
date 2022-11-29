@@ -8,13 +8,15 @@ module.exports = {
         name: "Field 1",
         createdAt: new Date(),
         updatedAt: new Date(),
-        fieldTypeId: 1
+        fieldTypeId: 1,
+        boardId: 1
       },
       {
         name: "Field 2",
         createdAt: new Date(),
         updatedAt: new Date(),
-        fieldTypeId: 1
+        fieldTypeId: 1,
+        boardId: 1
       }
     ]);
   },

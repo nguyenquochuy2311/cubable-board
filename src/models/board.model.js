@@ -1,7 +1,5 @@
 'use strict';
 
-const { isString } = require("../utils/isString");
-
 const {
     Model
 } = require('sequelize');
@@ -11,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             BoardModel.hasMany(models.BoardItemModel, {
                 as: "boardItems",
+                foreignKey: "boardId",
+                onDelete: "cascade",
+            })
+
+            BoardModel.hasMany(models.FieldModel, {
+                as: "fields",
                 foreignKey: "boardId",
                 onDelete: "cascade",
             })

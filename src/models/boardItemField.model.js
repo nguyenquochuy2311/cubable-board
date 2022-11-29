@@ -1,7 +1,7 @@
 "use strict";
 
-const BoardItem = require("./board.model");
-const Field = require("./field.model");
+const BoardItem = require("./").BoardItemModel;
+const Field = require("./").FieldModel;
 
 const {
   Model
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: BoardItem,
-          key: "fk_board_item"
+          key: "id"
         },
         get() {
           return this.getDataValue("boardItemId")
@@ -77,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: Field,
-          key: "fk_field"
+          key: "id"
         },
         get() {
           return this.getDataValue("fieldId")

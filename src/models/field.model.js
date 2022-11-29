@@ -1,5 +1,8 @@
 "use strict";
 
+const FieldType = require("./").FieldTypeModel;
+const Board = require("./").BoardModel;
+
 const {
   Model
 } = require('sequelize');
@@ -22,12 +25,20 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "fieldTypeId",
         onDelete: "cascade",
       })
+
+      FieldModel.belongsTo(models.BoardModel, {
+        as: "board",
+        foreignKey: "boardId",
+        onDelete: "cascade",
+      })
     }
 
     toJSON() {
       return {
         id: this.getDataValue("id"),
-        name: this.getDataValue("name")
+        name: this.getDataValue("name"),
+        fieldTypeId: this.getDataValue("fieldTypeId"),
+        boardId: this.getDataValue("boardId")
       }
     }
   }
@@ -57,11 +68,28 @@ module.exports = (sequelize, DataTypes) => {
     fieldTypeId: {
       type: DataTypes.INTEGER,
       defaultValue: 1,
+      references: {
+        model: FieldType,
+        key: "id"
+      },
       get() {
         return this.getDataValue("fieldTypeId")
       },
       set(val) {
         this.setDataValue("fieldTypeId", val)
+      }
+    },
+    boardId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Board,
+        key: "id"
+      },
+      get() {
+        return this.getDataValue("boardId")
+      },
+      set(val) {
+        this.setDataValue("boardId", val)
       }
     }
   },

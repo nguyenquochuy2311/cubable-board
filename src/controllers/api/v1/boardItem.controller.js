@@ -78,7 +78,7 @@ module.exports = {
             Object.assign(boardItem, { boardId: board.id });
 
             const fieldCreated = await fieldService.createDefaultField();
-            if(!fieldCreated) next(createError.BadRequest("Field need create")); 
+            if(!fieldCreated) next(createError.BadRequest("Field need create first")); 
 
             const boardItemCreated = await boardItemService.createOne(boardItem);
             if(!boardItemCreated) next(createError.BadRequest("Create item failed"));

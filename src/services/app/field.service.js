@@ -22,13 +22,43 @@ const createOne = async (data) => {
  * @param   {}  field object       
  * @return  {}  field object 
  */
- const createDefaultField = async () => {
+const createDefaultField = async () => {
     const fieldCreated = await fieldRepository.create();
     return fieldCreated;
+}
+
+/**
+ * @param   _   board id      
+ * @return  []  field array 
+ */
+const getAllByBoardId = async (boardId) => {
+    const fields = await fieldRepository.findAllByBoardId(boardId);
+    return fields;
+}
+
+/**
+ * @param   _   field object
+ * @return  {}  field object 
+ */
+const updateById = async (data) => {
+    const fieldType = await fieldRepository.updateByPk(data);
+    return fieldType;
+}
+
+/**
+ * @param   _       field id
+ * @return  0 || 1  boolean
+ */
+const deleteById = async (id) => {
+    const isDeleted = await fieldRepository.destroyById(id);
+    return isDeleted;
 }
 
 module.exports = {
     getOneById,
     createOne,
-    createDefaultField
+    createDefaultField,
+    getAllByBoardId,
+    updateById,
+    deleteById
 }

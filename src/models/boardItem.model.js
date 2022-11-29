@@ -1,5 +1,7 @@
 'use strict';
 
+const Board = require("./").BoardModel;
+
 const {
   Model
 } = require('sequelize');
@@ -16,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "boardId"
       }),
 
-        BoardItemModel.belongsToMany(models.FieldModel, {
-          through: "BoardItemFieldModel",
-          as: "boardItemFields",
-          foreignKey: "boardItemId"
-        })
+      BoardItemModel.belongsToMany(models.FieldModel, {
+        through: "BoardItemFieldModel",
+        as: "boardItemFields",
+        foreignKey: "boardItemId"
+      })
     }
 
     toJSON() {
@@ -45,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     boardId: {
       type: DataTypes.INTEGER,
+      references: {
+        model: Board,
+        key: "id"
+      },
       get() {
         return this.getDataValue("boardId");
       },

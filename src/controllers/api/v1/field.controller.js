@@ -58,14 +58,17 @@ module.exports = {
             const field = await fieldService.getOneById(fieldValid.id);
             if (!field) return next(createError.BadRequest("Field not found"));
 
-            const fieldReq = {
-                id: fieldValid.id,
-                name: name || field.get("name")
-            };
-            const fieldUpdated = await fieldService.updateById(fieldReq);
-            if (!fieldUpdated) return next(createError.BadRequest("Update failed"));
-
-            return res.json(fieldUpdated);
+            const board = req.board;
+            if(board.id == field.get("boardId")) {
+                const fieldReq = {
+                    id: fieldValid.id,
+                    name: name || field.get("name")
+                };
+                const fieldUpdated = await fieldService.updateById(fieldReq);
+                if (fieldUpdated) return res.json(fieldUpdated);
+            }
+            
+            return next(createError.BadRequest("Update failed"));
         } catch (error) {
             next(error);
         }
@@ -80,7 +83,6 @@ module.exports = {
 
             const board = req.board;
             if (field.boardId == board.id) {
-                console.log("here");
                 const isDeleted = await fieldService.deleteById(fieldId);
                 if (isDeleted) return res.json({ message: "Delete success" });
             }

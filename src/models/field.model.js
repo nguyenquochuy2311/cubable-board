@@ -36,9 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     toJSON() {
       return {
         id: this.getDataValue("id"),
-        name: this.getDataValue("name"),
-        fieldTypeId: this.getDataValue("fieldTypeId"),
-        boardId: this.getDataValue("boardId")
+        name: this.getDataValue("name")
       }
     }
   }

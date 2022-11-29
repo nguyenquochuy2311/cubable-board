@@ -25,16 +25,27 @@ const preProcessFormulaString = (string = inputString, map = valueMap) => {
     const splitKey = Object.keys(map);
     console.log(splitKey);
 
-    let strRes = "";
-    for(const str of splitKey) {
-        console.log(str);
-        if(str.includes(splitKey)) console.log(splitKey);
+    let strRes = [];
+    for(const key of splitKey) {
+        for(let i = 0; i < splitString.length; i++) {
+            if(splitString[i].includes(key)) {
+                let repStr = splitString[i].replace(splitString[i], map[key]);
+                strRes.push(repStr);
+
+
+                splitString.splice(i, 1);
+            }
+        }
     }
+    const stringRes = strRes.join(",").split(",");
 
     // returning value should be STRING
-    return string;
+    // return string;
+    return stringRes.join(",");
 };
 
+
+console.log(typeof preProcessFormulaString());
 
 // correct result will be #string_2 = 'annotation là #string_2, khác với #string_1 ở chỗ có thêm escape sign \\, và cả các escape quote "\'`'
 console.log( calculateFormulaStringInVM( preProcessFormulaString() ) );

@@ -99,6 +99,7 @@ module.exports = {
     // PUT - /:boardId/filter?boardItemId=:boardItemId
     update: async (req, res, next) => {
         try {
+            const board = req.board;
             const { boardItemId } = req.query;
             
             const boardItem = await boardItemService.getOneById(boardItemId);
@@ -107,7 +108,7 @@ module.exports = {
             const boardValid = await validateCreateBoardItemForm(req.body);
 
             const field = await fieldService.getOneById(boardValid.fieldId);
-            if(!field) return next(createError.BadRequest("Field not found"));
+            if(!field || field.get("boardId") != board.id) return next(createError.BadRequest("Field not found"));
 
             const itemField = await boardItemFieldService.createOrUpdate({
                 value: boardValid.value,

@@ -19,33 +19,17 @@ const valueMap = {
 
 // pre-process string
 const preProcessFormulaString = (string = inputString, map = valueMap) => {
-    const splitString =  string.split("#").slice(1);
-    console.log(splitString);
-
-    const splitKey = Object.keys(map);
-    console.log(splitKey);
-
-    let strRes = [];
-    for(const key of splitKey) {
-        for(let i = 0; i < splitString.length; i++) {
-            if(splitString[i].includes(key)) {
-                let repStr = splitString[i].replace(splitString[i], map[key]);
-                strRes.push(repStr);
-
-
-                splitString.splice(i, 1);
-            }
-        }
+    for(const value in map) {
+        let tempStr = string;
+        let temp = tempStr.replaceAll(value, map[value]);
+        string = temp;
     }
-    const stringRes = strRes.join(",").split(",");
 
-    // returning value should be STRING
-    // return string;
-    return stringRes.join(",");
+    return string;
 };
 
 
-console.log(typeof preProcessFormulaString());
+// console.log(preProcessFormulaString());
 
 // correct result will be #string_2 = 'annotation là #string_2, khác với #string_1 ở chỗ có thêm escape sign \\, và cả các escape quote "\'`'
 console.log( calculateFormulaStringInVM( preProcessFormulaString() ) );

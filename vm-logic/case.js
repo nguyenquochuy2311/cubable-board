@@ -1,8 +1,8 @@
-// 1. ""
-// a = 'I'm a broken string'
-a = 'I\'m a broken string'
+arr = ['annotation là #string_1',
+    'annotation là #string_2, khác với #string_1 ở chỗ có thêm escape sign \\, và cả các escape quote "\'`',
+    '12',
+    '0',
+    '-0.5',
+    '"15" - -0.3 + "#number_3 + 1 - 1" + 2']
 
-// 2. ""`
-b = `"We're safely using an apostrophe in double quotes."`
-
-
+a = 'annotation là #string_1,annotation là #string_2, khác với #string_1 ở chỗ có thêm escape sign \, và cả các escape quote "'`,12,0,-0.5,"15" - -0.3 + "#number_3 + 1 - 1" + 2'
